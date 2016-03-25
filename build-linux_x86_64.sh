@@ -1,24 +1,33 @@
 ##############################################
-# libusb builder for Linux 64 bits           #
+# libusb builder for Linux 64 bits           
+# (C) BQ. March-2016
+# Written by Juan Gonzalez (Obijuan)
 ##############################################
 
+VERSION=1
 UPSTREAM=upstream
 PACK_DIR=packages
 ARCH=linux_x86_64
 BUILD_DIR=build_$ARCH
-PREFIX=$HOME/.$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
 TARBALL=$PACKNAME.tar.bz2
-VERSION=1
 
+
+# -- lIBUSB
 LIBUSB_GIT_REPO=https://github.com/libusb/libusb/releases/download/v1.0.20
 LIBUSB_FILENAME=libusb-1.0.20
 LIBUSB_FILENAME_TAR=$LIBUSB_FILENAME.tar.bz2
+
+# -- LIBFTDI
+LIBFTDI_REPO=https://www.intra2net.com/en/developer/libftdi/download
+LIBFTDI_FILENAME=libftdi1-1.2
+LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
 
 # --------------------- LIBUSB ----------------------------------------
 
 # Store current dir
 WORK=$PWD
+PREFIX=$WORK/$BUILD_DIR
 
 # -- TARGET: CLEAN. Remove the build dir and the generated packages
 # --  then exit
@@ -77,7 +86,7 @@ mkdir -p include
 cd $LIBUSB_FILENAME
 
 # Prepare for building
-./configure --prefix=$WORK/$BUILD_DIR
+./configure --prefix=$PREFIX
 
 # Compile!
 make
@@ -96,8 +105,54 @@ cp listdevs $WORK/$PACK_DIR/bin
 
 # ------------------------ LIBFTDI --------------------------------------
 
+#-- Download the src tarball, if it has not been done yet
+cd $WORK/$UPSTREAM
+test -e $LIBFTDI_FILENAME_TAR ||
+    (echo ' ' && \
+    echo '--> DOWNLOADING LIBFTDI source package' && \
+    wget $LIBFTDI_REPO/$LIBFTDI_FILENAME_TAR)
 
 
-# -- Create the package
+#-- Extract the src files, if it has not been done yet
+test -e $LIBFTDI_FILENAME ||
+    (echo ' ' && \
+     echo '--> UNCOMPRESSING LIBFTDI package' && \
+     tar vjxf $LIBFTDI_FILENAME_TAR)
+
+
+#-- Copy the upstream libusb into the build dir
+cd $WORK
+test -d $BUILD_DIR/$LIBFTDI_FILENAME ||
+      (echo ' ' && \
+      echo '--> COPYING LIBFTDI upstream into build_dir' && \
+      cp -r $UPSTREAM/$LIBFTDI_FILENAME $BUILD_DIR)
+
+# ---------------------------- Building the LIBUSB library
+cd $BUILD_DIR/$LIBFTDI_FILENAME
+
+mkdir -p build
+cd build
+
+# -- Configure the compilation
+cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
+
+# -- Let's compile
+make
+
+# -- Installation
+make install
+
+# -- Compile the find_all example
+cd ../examples
+gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
+       -L $PREFIX/lib $PREFIX/lib/libftdi1.a $PREFIX/lib/libusb-1.0.a  \
+       -ludev -lpthread
+
+
+# -- Copy the executable into the packages/bin dir
+cp find_all $WORK/$PACK_DIR/bin
+
+
+# ---------------------------------- Create the package
 cd $WORK/$PACK_DIR
 tar vjcf $TARBALL bin
