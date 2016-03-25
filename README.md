@@ -1,6 +1,6 @@
-![](https://github.com/bqlabs/tools-usb-ftdi/raw/master/doc/apio-logo.png)
+# Tools-usb-ftdi Apio package
 
-# tools-usb-ftdi
+![](https://github.com/bqlabs/tools-usb-ftdi/raw/master/doc/apio-logo.png)
 [Apio](https://github.com/bqlabs/apio) package Tool for listing the usb devices and retrieving information from the ftdi chips
 
 ## Documentation
