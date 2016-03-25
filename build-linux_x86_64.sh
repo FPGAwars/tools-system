@@ -5,7 +5,6 @@
 UPSTREAM=upstream
 PACK_DIR=packages
 ARCH=linux_x86_64
-NAME=libusb
 BUILD_DIR=build_$ARCH
 PREFIX=$HOME/.$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
@@ -25,6 +24,12 @@ WORK=$PWD
 # --  then exit
 if [ "$1" == "clean" ]; then
   echo "-----> CLEAN"
+
+  # -- Remove the build dir
+  rm -rf $WORK/$BUILD_DIR
+
+  # -- Remove the packages dir
+  rm  -rf $WORK/$PACK_DIR
 
   exit
 fi
