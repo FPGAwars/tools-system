@@ -1,5 +1,3 @@
-![](https://github.com/bqlabs/tools-usb-ftdi/raw/master/doc/apio-logo.png)
-
 # Tools-usb-ftdi Apio package
 
 ![](https://github.com/bqlabs/tools-usb-ftdi/raw/master/doc/apio-logo.png)
