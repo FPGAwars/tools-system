@@ -2,16 +2,21 @@
 # libusb builder for Linux 64 bits           #
 ##############################################
 
+UPSTREAM=upstream
+PACK_DIR=packages
+ARCH=linux_x86_64
+NAME=libusb
+BUILD_DIR=build_$ARCH
+PREFIX=$HOME/.$ARCH
+PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
+TARBALL=$PACKNAME.tar.bz2
+VERSION=1
+
 LIBUSB_GIT_REPO=https://github.com/libusb/libusb/releases/download/v1.0.20
 LIBUSB_FILENAME=libusb-1.0.20
 LIBUSB_FILENAME_TAR=$LIBUSB_FILENAME.tar.bz2
-UPSTREAM=upstream
-PACK_DIR=packages
-NAME=libusb
-ARCH=linux_x86_64
-BUILD_DIR=build_$ARCH
-PREFIX=$HOME/.$ARCH
-VERSION=1
+
+# --------------------- LIBUSB ----------------------------------------
 
 # Store current dir
 WORK=$PWD
@@ -33,6 +38,7 @@ mkdir -p $UPSTREAM
 
 # Create the packages directory
 mkdir -p $PACK_DIR
+mkdir -p $PACK_DIR/bin
 
 # Create the build dir
 mkdir -p $BUILD_DIR ;
@@ -57,59 +63,36 @@ test -d $BUILD_DIR/$LIBUSB_FILENAME ||
      echo '--> COPYING LIBUSB upstream into build_dir' && \
      cp -r $UPSTREAM/$LIBUSB_FILENAME $BUILD_DIR)
 
+# -- Create the lib and include files
+cd $BUILD_DIR
+mkdir -p lib
+mkdir -p include
 
-# ---------------------------- Building the library
-cd $BUILD_DIR/$LIBUSB_FILENAME
+# ---------------------------- Building the LIBUSB library
+cd $LIBUSB_FILENAME
 
 # Prepare for building
-./configure
+./configure --prefix=$WORK/$BUILD_DIR
 
 # Compile!
 make
 
 # -- Copy the dev files into $BUILD_DIR/include $BUILD_DIR/lbs
+make install
 
 #-- Compile the listdevs-example
+cd examples
+gcc -o listdevs listdevs.c -I $WORK/$BUILD_DIR/include/libusb-1.0/  \
+     -L $WORK/$BUILD_DIR/lib  $WORK/$BUILD_DIR/lib/libusb-1.0.a  \
+     -ludev -lpthread
+
+# -- Copy the executable into the packages/bin dir
+cp listdevs $WORK/$PACK_DIR/bin
+
+# ------------------------ LIBFTDI --------------------------------------
 
 
 
-
-
-
-
-
-
-#BUILD=x86-unknown-linux-gnu
-#HOST=i686-linux-gnu
-#TARGET=i686make-linux-gnu
-
-
-
-#PACKNAME=$NAME-$ARCH-$VERSION
-
-
-
-#TARBALL=$PWD/$BUILD_DIR/$PACKNAME.tar.gz
-#ZIPBALL=$PWD/$BUILD_DIR/$PACKNAME.zip
-#ZIPEXAMPLE=listdevs-example-$ARCH-$VERSION.zip
-
-
-# Install libusb
-#make install
-
-# Cross-compile one example
-#cd examples
-#gcc -m32 -o listdevs listdevs.c -I $HOME/.linux_i686/include/libusb-1.0  -L /lib/i386-linux-gnu/  $HOME/.linux_i686/lib/libusb-1.0.a -lpthread -ludev
-
-# Zip the .exe file and move it to the main directory
-#zip $ZIPEXAMPLE listdevs.exe
-#mv $ZIPEXAMPLE $WORK/$PACK_DIR
-
-# Create the tarball
-#cd $PREFIX
-#tar vzcf $TARBALL *
-#mv $TARBALL $WORK/$PACK_DIR
-
-# Create the zipball
-#zip -r $ZIPBALL *
-#mv $ZIPBALL $WORK/$PACK_DIR
+# -- Create the package
+cd $WORK/$PACK_DIR
+tar vjcf $TARBALL bin
