@@ -10,7 +10,7 @@ PACK_DIR=packages
 ARCH=windows_i386
 BUILD_DIR=build_$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
-TARBALL=$PACKNAME.tar.bz2
+TARBALL=$PACKNAME.zip
 BUILD=x86-unknown-linux-gnu
 HOST=i686-w64-mingw32
 TARGET=i686-w64-mingw32
@@ -184,5 +184,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-tar vjcf $TARBALL bin
+zip -r $TARBALL *
 mv $TARBALL ..
