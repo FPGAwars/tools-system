@@ -1,5 +1,5 @@
 ##############################################
-# libusb builder for Linux 64 bits           
+# libusb builder for Linux 64 bits
 # (C) BQ. March-2016
 # Written by Juan Gonzalez (Obijuan)
 ##############################################
@@ -22,6 +22,12 @@ LIBUSB_FILENAME_TAR=$LIBUSB_FILENAME.tar.bz2
 LIBFTDI_REPO=https://www.intra2net.com/en/developer/libftdi/download
 LIBFTDI_FILENAME=libftdi1-1.2
 LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
+
+# -- DEBUG
+COMPILE_LIBUSB=1
+COMPILE_LISTDEVS=1
+COMPILE_LIBFTDI=1
+COMPILE_FIND_ALL=1
 
 # --------------------- LIBUSB ----------------------------------------
 
@@ -83,25 +89,31 @@ mkdir -p lib
 mkdir -p include
 
 # ---------------------------- Building the LIBUSB library
-cd $LIBUSB_FILENAME
+if [ $COMPILE_LIBUSB == "1" ]; then
 
-# Prepare for building
-./configure --prefix=$PREFIX
+    cd $LIBUSB_FILENAME
 
-# Compile!
-make
+    # Prepare for building
+    # No udev used
+    ./configure --prefix=$PREFIX USE_UDEV=0
 
-# -- Copy the dev files into $BUILD_DIR/include $BUILD_DIR/lbs
-make install
+    # Compile!
+    make
 
-#-- Compile the listdevs-example
-cd examples
-gcc -o listdevs listdevs.c -I $WORK/$BUILD_DIR/include/libusb-1.0/  \
-     -L $WORK/$BUILD_DIR/lib  $WORK/$BUILD_DIR/lib/libusb-1.0.a  \
-     -ludev -lpthread
+    # -- Copy the dev files into $BUILD_DIR/include $BUILD_DIR/lbs
+    make install
 
-# -- Copy the executable into the packages/bin dir
-cp listdevs $WORK/$PACK_DIR/bin
+    if [ $COMPILE_LISTDEVS == "1" ]; then
+
+        #-- Compile the listdevs-example
+        cd examples
+        gcc -o listdevs listdevs.c -I $WORK/$BUILD_DIR/include/libusb-1.0/  \
+               -L $WORK/$BUILD_DIR/lib  -static -lusb-1.0 -lpthread
+
+        # -- Copy the executable into the packages/bin dir
+        cp listdevs $WORK/$PACK_DIR/bin
+    fi
+fi
 
 # ------------------------ LIBFTDI --------------------------------------
 
@@ -128,30 +140,34 @@ test -d $BUILD_DIR/$LIBFTDI_FILENAME ||
       cp -r $UPSTREAM/$LIBFTDI_FILENAME $BUILD_DIR)
 
 # ---------------------------- Building the LIBUSB library
-cd $BUILD_DIR/$LIBFTDI_FILENAME
 
-mkdir -p build
-cd build
+if [ $COMPILE_LIBFTDI == "1" ]; then
 
-# -- Configure the compilation
-cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
+    cd $BUILD_DIR/$LIBFTDI_FILENAME
 
-# -- Let's compile
-make
+    mkdir -p build
+    cd build
 
-# -- Installation
-make install
+    # -- Configure the compilation
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
 
-# -- Compile the find_all example
-cd ../examples
-gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
-       -L $PREFIX/lib $PREFIX/lib/libftdi1.a $PREFIX/lib/libusb-1.0.a  \
-       -ludev -lpthread
+    # -- Let's compile
+    make
 
+    # -- Installation
+    make install
 
-# -- Copy the executable into the packages/bin dir
-cp find_all $WORK/$PACK_DIR/bin
+    if [ $COMPILE_FIND_ALL == "1" ]; then
 
+        # -- Compile the find_all example
+        cd ../examples
+        gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
+            -L $PREFIX/lib -static -lftdi1 -lusb-1.0 -lpthread
+
+        # -- Copy the executable into the packages/bin dir
+        cp find_all $WORK/$PACK_DIR/bin
+    fi
+fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR
