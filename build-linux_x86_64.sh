@@ -140,7 +140,7 @@ test -d $BUILD_DIR/$LIBFTDI_FILENAME ||
       echo '--> COPYING LIBFTDI upstream into build_dir' && \
       cp -r $UPSTREAM/$LIBFTDI_FILENAME $BUILD_DIR)
 
-# ---------------------------- Building the LIBUSB library
+# ---------------------------- Building the LIBFTDI library
 
 if [ $COMPILE_LIBFTDI == "1" ]; then
 
