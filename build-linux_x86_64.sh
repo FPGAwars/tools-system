@@ -58,7 +58,8 @@ mkdir -p $UPSTREAM
 
 # Create the packages directory
 mkdir -p $PACK_DIR
-mkdir -p $PACK_DIR/bin
+mkdir -p $PACK_DIR/$BUILD_DIR
+mkdir -p $PACK_DIR/$BUILD_DIR/bin
 
 # Create the build dir
 mkdir -p $BUILD_DIR ;
@@ -111,7 +112,7 @@ if [ $COMPILE_LIBUSB == "1" ]; then
                -L $WORK/$BUILD_DIR/lib  -static -lusb-1.0 -lpthread
 
         # -- Copy the executable into the packages/bin dir
-        cp listdevs $WORK/$PACK_DIR/bin
+        cp listdevs $WORK/$PACK_DIR/$BUILD_DIR/bin
     fi
 fi
 
@@ -165,10 +166,11 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
             -L $PREFIX/lib -static -lftdi1 -lusb-1.0 -lpthread
 
         # -- Copy the executable into the packages/bin dir
-        cp find_all $WORK/$PACK_DIR/bin
+        cp find_all $WORK/$PACK_DIR/$BUILD_DIR/bin
     fi
 fi
 
 # ---------------------------------- Create the package
-cd $WORK/$PACK_DIR
+cd $WORK/$PACK_DIR/$BUILD_DIR
 tar vjcf $TARBALL bin
+mv $TARBALL ..
