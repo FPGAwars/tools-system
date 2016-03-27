@@ -14,6 +14,7 @@ TARBALL=$PACKNAME.tar.bz2
 BUILD=x86-unknown-linux-gnu
 HOST=arm-linux-gnueabihf
 TARGET=arm-linux-gnueabihf
+BUILD_DATA=build-data
 
 
 # -- lIBUSB
@@ -29,8 +30,8 @@ LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
 # -- DEBUG
 COMPILE_LIBUSB=1
 COMPILE_LISTDEVS=1
-COMPILE_LIBFTDI=0
-COMPILE_FIND_ALL=0
+COMPILE_LIBFTDI=1
+COMPILE_FIND_ALL=1
 
 # --------------------- LIBUSB ----------------------------------------
 
@@ -66,7 +67,10 @@ mkdir -p $PACK_DIR/$BUILD_DIR
 mkdir -p $PACK_DIR/$BUILD_DIR/bin
 
 # Create the build dir
-mkdir -p $BUILD_DIR ;
+mkdir -p $BUILD_DIR
+
+# Create a link from the user home to the build_dir
+ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
 
 #-- Download the src tarball, if it has not been done yet
 cd $UPSTREAM
@@ -146,6 +150,10 @@ test -d $BUILD_DIR/$LIBFTDI_FILENAME ||
       echo '--> COPYING LIBFTDI upstream into build_dir' && \
       cp -r $UPSTREAM/$LIBFTDI_FILENAME $BUILD_DIR)
 
+
+cp $WORK/$BUILD_DATA/$ARCH/toolchain-armhf.cmake.libftdi \
+   $WORK/$BUILD_DIR/$LIBFTDI_FILENAME/toolchain-armhf.cmake
+
 # ---------------------------- Building the LIBFTDI library
 
 if [ $COMPILE_LIBFTDI == "1" ]; then
@@ -156,7 +164,8 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
     cd build
 
     # -- Configure the compilation
-    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+          -DCMAKE_TOOLCHAIN_FILE=toolchain-armhf.cmake ..
 
     # -- Let's compile
     make
@@ -168,8 +177,9 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
 
         # -- Compile the find_all example
         cd ../examples
-        gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
-            -L $PREFIX/lib -static -lftdi1 -lusb-1.0 -lpthread
+        $HOST-gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
+              -L $PREFIX/lib   -L /usr/arm-linux-gnueabihf/lib/ \
+              -static -lftdi1 -lusb-1.0 -lpthread
 
         # -- Copy the executable into the packages/bin dir
         cp find_all $WORK/$PACK_DIR/$BUILD_DIR/bin
@@ -177,6 +187,6 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
 fi
 
 # ---------------------------------- Create the package
-#cd $WORK/$PACK_DIR/$BUILD_DIR
-#tar vjcf $TARBALL bin
-#mv $TARBALL ..
+cd $WORK/$PACK_DIR/$BUILD_DIR
+tar vjcf $TARBALL bin
+mv $TARBALL ..
