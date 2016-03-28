@@ -26,8 +26,8 @@ LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
 # -- DEBUG
 COMPILE_LIBUSB=1
 COMPILE_LISTDEVS=1
-COMPILE_LIBFTDI=0
-COMPILE_FIND_ALL=0
+COMPILE_LIBFTDI=1
+COMPILE_FIND_ALL=1
 
 # --------------------- LIBUSB ----------------------------------------
 
@@ -51,7 +51,7 @@ fi
 
 # Install dependencies
 echo "Instalando DEPENDENCIAS:"
-brew install wget libtool autoconf
+brew install wget libtool autoconf cmake libusb libftdi
 
 # Create the upstream folder
 mkdir -p $UPSTREAM
@@ -163,7 +163,7 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
         # -- Compile the find_all example
         cd ../examples
         gcc -o find_all find_all.c -I $PREFIX/include/libftdi1/ \
-            -L $PREFIX/lib -static -lftdi1 -lusb-1.0 -lpthread
+            -L $PREFIX/lib -lftdi1 -lusb-1.0
 
         # -- Copy the executable into the packages/bin dir
         cp find_all $WORK/$PACK_DIR/$BUILD_DIR/bin
