@@ -109,7 +109,7 @@ if [ $COMPILE_LIBUSB == "1" ]; then
         #-- Compile the listdevs-example
         cd examples
         gcc -o listdevs listdevs.c -I $WORK/$BUILD_DIR/include/libusb-1.0/  \
-               -L $WORK/$BUILD_DIR/lib  -static -lusb-1.0 -lpthread
+               -L $WORK/$BUILD_DIR/lib  -lusb-1.0
 
         # -- Copy the executable into the packages/bin dir
         cp listdevs $WORK/$PACK_DIR/$BUILD_DIR/bin
