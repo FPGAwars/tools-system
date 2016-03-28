@@ -24,7 +24,7 @@ LIBFTDI_FILENAME=libftdi1-1.2
 LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
 
 # -- DEBUG
-COMPILE_LIBUSB=0
+COMPILE_LIBUSB=1
 COMPILE_LISTDEVS=0
 COMPILE_LIBFTDI=0
 COMPILE_FIND_ALL=0
@@ -51,7 +51,7 @@ fi
 
 # Install dependencies
 echo "Instalando DEPENDENCIAS:"
-sudo apt-get install libtool autoconf libudev-dev libudev1
+brew install wget libtool autoconf
 
 # Create the upstream folder
 mkdir -p $UPSTREAM
