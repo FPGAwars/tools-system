@@ -163,7 +163,8 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
 
     # -- Configure the compilation
     cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
-          -DCMAKE_C_COMPILER_ARG1="-m32" ..
+          -DCMAKE_C_COMPILER_ARG1="-m32" \
+          -DLIBUSB_LIBRARIES=$WORK/$BUILD_DIR/lib/libusb-1.0.so ..
 
     # -- Let's compile
     make
@@ -185,5 +186,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-#tar vjcf $TARBALL bin
-#mv $TARBALL ..
+tar vjcf $TARBALL bin
+mv $TARBALL ..
