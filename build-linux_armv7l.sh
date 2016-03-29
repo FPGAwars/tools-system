@@ -1,13 +1,13 @@
-#########################################################
-# libusb and libftdi builder for Ubuntu phone (armhf)
+#######################################################################
+# libusb and libftdi builder for Ubuntu phone (armhf) and raspberry
 # (C) BQ. March-2016
 # Written by Juan Gonzalez (Obijuan)
-#########################################################
+#######################################################################
 
 VERSION=1
 UPSTREAM=upstream
 PACK_DIR=packages
-ARCH=armhf
+ARCH=linux_armv7l
 BUILD_DIR=build_$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
 TARBALL=$PACKNAME.tar.bz2
@@ -29,9 +29,9 @@ LIBFTDI_FILENAME_TAR=$LIBFTDI_FILENAME.tar.bz2
 
 # -- DEBUG
 COMPILE_LIBUSB=1
-COMPILE_LISTDEVS=1
-COMPILE_LIBFTDI=1
-COMPILE_FIND_ALL=1
+COMPILE_LISTDEVS=0
+COMPILE_LIBFTDI=0
+COMPILE_FIND_ALL=0
 
 # --------------------- LIBUSB ----------------------------------------
 
@@ -70,7 +70,7 @@ mkdir -p $PACK_DIR/$BUILD_DIR/bin
 mkdir -p $BUILD_DIR
 
 # Create a link from the user home to the build_dir
-ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
+test -d $HOME/.$ARCH || ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
 
 #-- Download the src tarball, if it has not been done yet
 cd $UPSTREAM
@@ -188,5 +188,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-tar vjcf $TARBALL bin
-mv $TARBALL ..
+#tar vjcf $TARBALL bin
+#mv $TARBALL ..
