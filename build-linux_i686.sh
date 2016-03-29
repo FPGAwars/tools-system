@@ -86,6 +86,9 @@ test -d $BUILD_DIR/$LIBUSB_FILENAME ||
      echo '--> COPYING LIBUSB upstream into build_dir' && \
      cp -r $UPSTREAM/$LIBUSB_FILENAME $BUILD_DIR)
 
+#-- Apply the patch to the libusb
+cp $WORK/$BUILD_DATA/configure.ac.libusb $BUILD_DIR/$LIBUSB_FILENAME/configure.ac
+
 # -- Create the lib and include files
 cd $BUILD_DIR
 mkdir -p lib
@@ -96,9 +99,15 @@ if [ $COMPILE_LIBUSB == "1" ]; then
 
     cd $LIBUSB_FILENAME
 
+    #-- Remove the default configure script
+    rm -f configure
+
+    #-- Generate the new configure from configure.ac patched
+    autoconf
+
     # Prepare for building
     # No udev used
-    ./configure --prefix=$PREFIX USE_UDEV=0  --host=$HOST "CFLAGS=-m32" \
+    ./configure --prefix=$PREFIX --host=$HOST "CFLAGS=-m32" \
                   "CXXFLAGS=-m32"  "LDFLAGS=-m32"
 
     # Compile!
@@ -176,5 +185,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-tar vjcf $TARBALL bin
-mv $TARBALL ..
+#tar vjcf $TARBALL bin
+#mv $TARBALL ..
