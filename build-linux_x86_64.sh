@@ -11,6 +11,7 @@ ARCH=linux_x86_64
 BUILD_DIR=build_$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
 TARBALL=$PACKNAME.tar.bz2
+BUILD_DATA=build-data
 
 
 # -- lIBUSB
@@ -51,7 +52,7 @@ fi
 
 # Install dependencies
 echo "Instalando DEPENDENCIAS:"
-sudo apt-get install libtool autoconf libudev-dev libudev1
+sudo apt-get install libtool autoconf
 
 # Create the upstream folder
 mkdir -p $UPSTREAM
@@ -84,6 +85,10 @@ test -d $BUILD_DIR/$LIBUSB_FILENAME ||
      echo '--> COPYING LIBUSB upstream into build_dir' && \
      cp -r $UPSTREAM/$LIBUSB_FILENAME $BUILD_DIR)
 
+#-- Apply the patch to the libusb
+echo "-----------------------> Copy configure.ac"
+cp $WORK/$BUILD_DATA/configure.ac.libusb $WORK/$BUILD_DIR/$LIBUSB_FILENAME/configure.ac
+
 # -- Create the lib and include files
 cd $BUILD_DIR
 mkdir -p lib
@@ -94,9 +99,14 @@ if [ $COMPILE_LIBUSB == "1" ]; then
 
     cd $LIBUSB_FILENAME
 
+    #-- Remove the default configure script
+    rm -f configure
+
+    #-- Generate the new configure from configure.ac patched
+    autoconf
+
     # Prepare for building
-    # No udev used
-    ./configure --prefix=$PREFIX USE_UDEV=0
+    ./configure --prefix=$PREFIX
 
     # Compile!
     make
@@ -150,7 +160,10 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
     cd build
 
     # -- Configure the compilation
-    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+          -DLIBUSB_LIBRARIES=$WORK/$BUILD_DIR/lib/libusb-1.0.so \
+          -DLIBFTDI_LIBRARY_DIRS=$WORK/$BUILD_DIR/lib \
+          -DLIBUSB_INCLUDE_DIR=$WORK/$BUILD_DIR/include/libusb-1.0 ..
 
     # -- Let's compile
     make
