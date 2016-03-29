@@ -69,9 +69,6 @@ mkdir -p $PACK_DIR/$BUILD_DIR/bin
 # Create the build dir
 mkdir -p $BUILD_DIR
 
-# Create a link from the user home to the build_dir
-test -d $HOME/.$ARCH || ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
-
 #-- Download the src tarball, if it has not been done yet
 cd $UPSTREAM
 test -e $LIBUSB_FILENAME_TAR ||
@@ -171,7 +168,10 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
 
     # -- Configure the compilation
     cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
-          -DCMAKE_TOOLCHAIN_FILE=toolchain-armhf.cmake ..
+          -DCMAKE_TOOLCHAIN_FILE=toolchain-armhf.cmake \
+          -DLIBUSB_LIBRARIES=$WORK/$BUILD_DIR/lib/libusb-1.0.so \
+          -DLIBFTDI_LIBRARY_DIRS=$WORK/$BUILD_DIR/lib \
+          -DLIBUSB_INCLUDE_DIR=$WORK/$BUILD_DIR/include/libusb-1.0 ..
 
     # -- Let's compile
     make

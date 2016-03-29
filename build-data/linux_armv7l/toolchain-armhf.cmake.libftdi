@@ -14,10 +14,3 @@ SET(CMAKE_FIND_ROOT_PATH  /usr/arm-linux-gnueabihf/ ~/.armhf )
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-
-# Set the LIBUSB
-set(LIBUSB_LIBRARIES $ENV{HOME}/.armhf/lib/libusb-1.0.so)
-set(LIBUSB_INCLUDE_DIR ~/.armhf/include/libusb-1.0)
-
-# Set the LIBFTDI
-set(libdir ~/.armf/lib )
