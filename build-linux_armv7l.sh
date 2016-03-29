@@ -194,5 +194,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-#tar vjcf $TARBALL bin
-#mv $TARBALL ..
+tar vjcf $TARBALL bin
+mv $TARBALL ..
