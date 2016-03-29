@@ -164,7 +164,9 @@ if [ $COMPILE_LIBFTDI == "1" ]; then
     # -- Configure the compilation
     cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
           -DCMAKE_C_COMPILER_ARG1="-m32" \
-          -DLIBUSB_LIBRARIES=$WORK/$BUILD_DIR/lib/libusb-1.0.so ..
+          -DLIBUSB_LIBRARIES=$WORK/$BUILD_DIR/lib/libusb-1.0.so \
+          -DLIBFTDI_LIBRARY_DIRS=$WORK/$BUILD_DIR/lib \
+          -DLIBUSB_INCLUDE_DIR=$WORK/$BUILD_DIR/include/libusb-1.0 ..
 
     # -- Let's compile
     make
