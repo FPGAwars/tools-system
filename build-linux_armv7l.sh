@@ -1,13 +1,13 @@
-#########################################################
-# libusb and libftdi builder for Ubuntu phone (armhf)
+#######################################################################
+# libusb and libftdi builder for Ubuntu phone (armhf) and raspberry
 # (C) BQ. March-2016
 # Written by Juan Gonzalez (Obijuan)
-#########################################################
+#######################################################################
 
 VERSION=1
 UPSTREAM=upstream
 PACK_DIR=packages
-ARCH=armhf
+ARCH=linux_armv7l
 BUILD_DIR=build_$ARCH
 PACKNAME=tools-usb-ftdi-$ARCH-$VERSION
 TARBALL=$PACKNAME.tar.bz2
@@ -70,7 +70,7 @@ mkdir -p $PACK_DIR/$BUILD_DIR/bin
 mkdir -p $BUILD_DIR
 
 # Create a link from the user home to the build_dir
-ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
+test -d $HOME/.$ARCH || ln -s $WORK/$BUILD_DIR $HOME/.$ARCH
 
 #-- Download the src tarball, if it has not been done yet
 cd $UPSTREAM
@@ -92,6 +92,9 @@ test -d $BUILD_DIR/$LIBUSB_FILENAME ||
      echo '--> COPYING LIBUSB upstream into build_dir' && \
      cp -r $UPSTREAM/$LIBUSB_FILENAME $BUILD_DIR)
 
+#-- Apply the patch to the libusb
+cp $WORK/$BUILD_DATA/configure.ac.libusb $BUILD_DIR/$LIBUSB_FILENAME/configure.ac
+
 # -- Create the lib and include files
 cd $BUILD_DIR
 mkdir -p lib
@@ -102,9 +105,12 @@ if [ $COMPILE_LIBUSB == "1" ]; then
 
     cd $LIBUSB_FILENAME
 
+    #-- Generate the new configure from configure.ac patched
+    autoconf
+
     # Prepare for building
     # No udev used
-    ./configure --prefix=$PREFIX USE_UDEV=0 --build=$BUILD --host=$HOST \
+    ./configure --prefix=$PREFIX --build=$BUILD --host=$HOST \
                 --target=$TARGET
 
     # Compile!
@@ -188,5 +194,5 @@ fi
 
 # ---------------------------------- Create the package
 cd $WORK/$PACK_DIR/$BUILD_DIR
-tar vjcf $TARBALL bin
-mv $TARBALL ..
+#tar vjcf $TARBALL bin
+#mv $TARBALL ..
