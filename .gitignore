@@ -1,0 +1,4 @@
+*.tar.gz
+_builds/
+_packages/
+_upstream/
