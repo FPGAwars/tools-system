@@ -32,23 +32,24 @@ cd $BUILD_DIR/$LSUSB
 cd examples
 
 if [ $ARCH == "linux_x86_64" ]; then
-  gcc -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
+  gcc -o lsusb listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_i686" ]; then
-  gcc -m32 -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
+  gcc -m32 -o lsusb listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_armv7l" ]; then
-  arm-linux-gnueabihf-gcc -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
+  arm-linux-gnueabihf-gcc -o lsusb listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_aarch64" ]; then
-  aarch64-linux-gnu-gcc -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
+  aarch64-linux-gnu-gcc -o lsusb listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
-#if [ $ARCH == "windows" ]; then
-#fi
+if [ $ARCH == "windows" ]; then
+  i686-w64-mingw32-gcc -o lsusb.exe listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
 cd ..
 
@@ -59,4 +60,4 @@ fi
 
 # -- Copy the executable into the packages/bin dir
 mkdir -p $PACKAGE_DIR/$NAME/bin
-cp examples/lsusb $PACKAGE_DIR/$NAME/bin
+cp examples/lsusb$EXT $PACKAGE_DIR/$NAME/bin

@@ -1,7 +1,7 @@
 # Install dependencies script
 
 if [ $ARCH == "linux_x86_64" ]; then
-  sudo apt-get install -y build-essential
+  sudo apt-get install -y build-essential libftdi1-dev
   sudo apt-get autoremove -y
 fi
 
@@ -28,7 +28,6 @@ if [ $ARCH == "darwin" ]; then
 fi
 
 if [ $ARCH == "windows" ]; then
-  sudo apt-get install -y build-essential bison flex gperf libtool autoconf \
-                          mingw-w64 mingw-w64-tools zip
+  sudo apt-get install -y build-essential mingw-w64 mingw-w64-tools
   sudo apt-get autoremove -y
 fi

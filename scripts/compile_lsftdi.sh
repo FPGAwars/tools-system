@@ -32,23 +32,24 @@ cd $BUILD_DIR/$LSFTDI
 cd examples
 
 if [ $ARCH == "linux_x86_64" ]; then
-  gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+  gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_i686" ]; then
-  gcc -m32 -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+  gcc -m32 -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_armv7l" ]; then
-  arm-linux-gnueabihf-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+  arm-linux-gnueabihf-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "linux_aarch64" ]; then
-  aarch64-linux-gnu-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+  aarch64-linux-gnu-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
-#if [ $ARCH == "windows" ]; then
-#fi
+if [ $ARCH == "windows" ]; then
+  i686-w64-mingw32-gcc -o lsftdi.exe find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
 cd ..
 
@@ -59,4 +60,4 @@ fi
 
 # -- Copy the executable into the packages/bin dir
 mkdir -p $PACKAGE_DIR/$NAME/bin
-cp examples/lsftdi $PACKAGE_DIR/$NAME/bin
+cp examples/lsftdi$EXT $PACKAGE_DIR/$NAME/bin
