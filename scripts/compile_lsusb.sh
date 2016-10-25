@@ -27,15 +27,17 @@ rsync -a $LSUSB $BUILD_DIR --exclude .git
 
 cd $BUILD_DIR/$LSUSB
 
+#-- Build static lsusb
+
+cd examples
+
 if [ $ARCH == "linux_x86_64" ]; then
-  #-- Make listdevs static
-  cd examples
   gcc -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
-  cd ..
 fi
 
-#if [ $ARCH == "linux_i686" ]; then
-#fi
+if [ $ARCH == "linux_i686" ]; then
+  gcc -m32 -o lsusb listdevs.c -static -lusb-1.0 -lpthread -I ../libusb -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
 #if [ $ARCH == "linux_armv7l" ]; then
 #fi
@@ -45,6 +47,8 @@ fi
 
 #if [ $ARCH == "windows" ]; then
 #fi
+
+cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then

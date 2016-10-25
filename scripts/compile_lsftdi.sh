@@ -27,15 +27,17 @@ rsync -a $LSFTDI $BUILD_DIR --exclude .git
 
 cd $BUILD_DIR/$LSFTDI
 
+#-- Build static lsftdi
+
+cd examples
+
 if [ $ARCH == "linux_x86_64" ]; then
-  #-- Make find_all static
-  cd examples
-  gcc -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L $WORK_DIR/build-data/$ARCH/lib
-  cd ..
+  gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
-#if [ $ARCH == "linux_i686" ]; then
-#fi
+if [ $ARCH == "linux_i686" ]; then
+  gcc -m32 -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
 #if [ $ARCH == "linux_armv7l" ]; then
 #fi
@@ -45,6 +47,8 @@ fi
 
 #if [ $ARCH == "windows" ]; then
 #fi
+
+cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then

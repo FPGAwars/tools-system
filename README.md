@@ -1,5 +1,7 @@
 # Tools-system
 
+## Introduction
+
 [Apio](https://github.com/FPGAwars/apio) package Tool for listing the usb devices and retrieving information from the ftdi chips
 
 ## Usage
@@ -17,11 +19,7 @@ Run the script `./build.sh`
 
 Final packages will be generated in **\_packages/build_ARCH/** directory.
 
-## Documentation
-
-[Check the wiki page for the documentation](https://github.com/FPGAwars/tools-usb-ftdi/wiki)
-
-## Author
+## Authors
 
 * [Juan González-Gómez (Obijuan)](https://github.com/Obijuan)
 * [Jesús Arroyo Torrens](https://github.com/Jesus89)

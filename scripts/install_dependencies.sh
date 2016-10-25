@@ -6,8 +6,8 @@ if [ $ARCH == "linux_x86_64" ]; then
 fi
 
 if [ $ARCH == "linux_i686" ]; then
-  sudo apt-get install -y build-essential bison flex gperf libtool autoconf \
-                          gcc-multilib g++-multilib
+  sudo apt-get install -y build-essential gcc-multilib g++-multilib \
+                          libftdi1-dev:i386
   sudo apt-get autoremove -y
 fi
 
