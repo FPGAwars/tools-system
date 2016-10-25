@@ -9,7 +9,7 @@
 VERSION=1.0.0
 
 # -- Target architectures
-ARCHS=( darwin )
+ARCHS=( )
 # ARCHS=( linux_x86_64 linux_i686 linux_armv7l linux_aarch64 windows )
 # ARCHS=( darwin )
 
