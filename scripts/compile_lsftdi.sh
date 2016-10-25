@@ -51,6 +51,10 @@ if [ $ARCH == "windows" ]; then
   i686-w64-mingw32-gcc -o lsftdi.exe find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
+if [ $ARCH == "darwin" ]; then
+  clang -o lsftdi find_all.c -lftdi1 -lusb-1.0
+fi
+
 cd ..
 
 # -- Test the generated executables

@@ -24,7 +24,7 @@ if [ $ARCH == "linux_aarch64" ]; then
 fi
 
 if [ $ARCH == "darwin" ]; then
-  brew install bison
+  brew install wget libusb libftdi
 fi
 
 if [ $ARCH == "windows" ]; then
