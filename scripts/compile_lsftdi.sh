@@ -39,11 +39,13 @@ if [ $ARCH == "linux_i686" ]; then
   gcc -m32 -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
-#if [ $ARCH == "linux_armv7l" ]; then
-#fi
+if [ $ARCH == "linux_armv7l" ]; then
+  arm-linux-gnueabihf-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
-#if [ $ARCH == "linux_aarch64" ]; then
-#fi
+if [ $ARCH == "linux_aarch64" ]; then
+  aarch64-linux-gnu-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -static -L $WORK_DIR/build-data/$ARCH/lib
+fi
 
 #if [ $ARCH == "windows" ]; then
 #fi
