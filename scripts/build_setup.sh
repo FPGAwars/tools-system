@@ -11,17 +11,19 @@ if [ $ARCH == "linux_i686" ]; then
   CC="gcc -m32"
   HOST="i686-linux-gnu"
   CONFIG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-Crossbuild32.cmake"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-m32.cmake"
 fi
 
 if [ $ARCH == "linux_armv7l" ]; then
   CC="arm-linux-gnueabihf-gcc"
   HOST="arm-linux-gnueabihf"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-armhf.cmake"
 fi
 
 if [ $ARCH == "linux_aarch64" ]; then
   CC="aarch64-linux-gnu-gcc"
   HOST="aarch64-linux-gnu"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-aarch64.cmake"
 fi
 
 if [ $ARCH == "windows_x86" ]; then
