@@ -24,22 +24,22 @@ cd $BUILD_DIR/$LIBUSB
 PREFIX=$BUILD_DIR/$LIBUSB/release
 
 #-- Build libusb
-
-./configure --host=$HOST --prefix=$PREFIX --enable-udev=no
+if [ $ARCH == "darwin" ]; then
+  ./configure --prefix=$PREFIX
+else
+  ./configure --host=$HOST --prefix=$PREFIX --enable-udev=no
+fi
 make -j$J
 make install
 
-#-- Build static lsusb
-
+#-- Build lsusb
 cd examples
-$CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/include/libusb-1.0
-cd ..
-
-
-
 if [ $ARCH == "darwin" ]; then
-  clang -o lsusb listdevs.c -lusb-1.0 -I ../libusb
+  $CC -o lsusb listdevs.c -lusb-1.0 -I$PREFIX/include/libusb-1.0
+else
+  $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/include/libusb-1.0
 fi
+cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then

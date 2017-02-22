@@ -34,8 +34,8 @@ if [ $ARCH == "windows_amd64" ]; then
   HOST="x86_64-w64-mingw32"
 fi
 
-
 if [ $ARCH == "darwin" ]; then
+  CC="clang"
   J=$(($(sysctl -n hw.ncpu)-1))
 else
   J=$(($(nproc)-1))
