@@ -27,43 +27,27 @@ cd $BUILD_DIR/$LIBFTDI1
 PREFIX=$BUILD_DIR/$LIBFTDI1/release
 LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
 
-
 #-- Build libftdi
 mkdir -p build
 cd build
-export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
-cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX
+export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
+cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
 make -j$J
 make install
 cd ..
 
 #-- Build lsftdi
 cd examples
+if [ $ARCH == "darwin" ]; then
+  $CC -o lsusb listdevs.c -lusb-1.0 -I$PREFIX/include/libftdi1
+else
   $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
+fi
 cd ..
-
-
-if [ $ARCH == "linux_i686" ]; then
-  gcc -m32 -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
-fi
-
-if [ $ARCH == "linux_armv7l" ]; then
-  arm-linux-gnueabihf-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
-fi
-
-if [ $ARCH == "linux_aarch64" ]; then
-  aarch64-linux-gnu-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
-fi
-
-if [ $ARCH == "windows" ]; then
-  i686-w64-mingw32-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
-fi
 
 if [ $ARCH == "darwin" ]; then
   clang -o lsftdi find_all.c -lftdi1 -lusb-1.0
 fi
-
-
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then

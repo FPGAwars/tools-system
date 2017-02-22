@@ -10,6 +10,8 @@ fi
 if [ $ARCH == "linux_i686" ]; then
   CC="gcc -m32"
   HOST="i686-linux-gnu"
+  CONFIG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-Crossbuild32.cmake"
 fi
 
 if [ $ARCH == "linux_armv7l" ]; then

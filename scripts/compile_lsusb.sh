@@ -28,7 +28,7 @@ PREFIX=$BUILD_DIR/$LIBUSB/release
 if [ $ARCH == "darwin" ]; then
   ./configure --prefix=$PREFIX
 else
-  ./configure --prefix=$PREFIX --host=$HOST --enable-udev=no
+  ./configure --prefix=$PREFIX --host=$HOST --enable-udev=no $CONFIG_FLAGS
 fi
 make -j$J
 make install

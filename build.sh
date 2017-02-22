@@ -6,7 +6,7 @@
 # Generate tools-system-arch-ver.tar.gz from source code
 # sources: https://github.com/FPGAwars/tools-system
 
-VERSION=1.0.0
+VERSION=1.1.0
 
 # -- Target architectures
 ARCHS=$1
@@ -19,7 +19,7 @@ NAME=tools-system
 INSTALL_DEPS=1
 COMPILE_LSUSB=1
 COMPILE_LSFTDI=1
-CREATE_PACKAGE=0
+CREATE_PACKAGE=1
 
 # -- Store current dir
 WORK_DIR=$PWD
