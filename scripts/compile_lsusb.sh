@@ -25,18 +25,16 @@ PREFIX=$BUILD_DIR/$LIBUSB/release
 #PREFIX=/usr/local
 
 #-- Build libusb
-if [ $ARCH == "darwin" ]; then
-  ./configure --prefix=$PREFIX
-else
+if [ $ARCH != "darwin" ]; then
   ./configure --prefix=$PREFIX --host=$HOST --enable-udev=no $CONFIG_FLAGS
+  make -j$J
+  make install
 fi
-make -j$J
-make install
 
 #-- Build lsusb
 cd examples
 if [ $ARCH == "darwin" ]; then
-  $CC -o lsusb listdevs.c -lusb-1.0 -I$PREFIX/include/libusb-1.0
+  $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb
 else
   $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/include/libusb-1.0
 fi

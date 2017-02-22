@@ -28,26 +28,24 @@ PREFIX=$BUILD_DIR/$LIBFTDI1/release
 LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
 
 #-- Build libftdi
-mkdir -p build
-cd build
-export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
-cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
-make -j$J
-make install
-cd ..
+if [ $ARCH != "darwin" ]; then
+  mkdir -p build
+  cd build
+  export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
+  cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
+  make -j$J
+  make install
+  cd ..
+fi
 
 #-- Build lsftdi
 cd examples
 if [ $ARCH == "darwin" ]; then
-  $CC -o lsusb listdevs.c -lusb-1.0 -I$PREFIX/include/libftdi1
+  $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0
 else
   $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
 fi
 cd ..
-
-if [ $ARCH == "darwin" ]; then
-  clang -o lsftdi find_all.c -lftdi1 -lusb-1.0
-fi
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
