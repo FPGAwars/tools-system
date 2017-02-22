@@ -3,16 +3,8 @@
 LSFTDI=libftdi1-1.2
 REL_LSFTDI=https://www.intra2net.com/en/developer/libftdi/download/$LSFTDI.tar.bz2
 
-EXT=""
-if [ $ARCH == "windows" ]; then
-  EXT=".exe"
-fi
-
-if [ $ARCH == "darwin" ]; then
-  J=$(($(sysctl -n hw.ncpu)-1))
-else
-  J=$(($(nproc)-1))
-fi
+# -- Setup
+. $WORK_DIR/scripts/build_setup.sh
 
 cd $UPSTREAM_DIR
 
@@ -48,7 +40,7 @@ if [ $ARCH == "linux_aarch64" ]; then
 fi
 
 if [ $ARCH == "windows" ]; then
-  i686-w64-mingw32-gcc -o lsftdi.exe find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
+  i686-w64-mingw32-gcc -o lsftdi find_all.c -lftdi1 -lusb-1.0 -lpthread -I ../src -static -L $WORK_DIR/build-data/$ARCH/lib
 fi
 
 if [ $ARCH == "darwin" ]; then
@@ -59,8 +51,8 @@ cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
-  test_bin examples/lsftdi$EXT
+  test_bin examples/lsftdi
 fi
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsftdi$EXT $PACKAGE_DIR/$NAME/bin
+cp examples/lsftdi $PACKAGE_DIR/$NAME/bin/lsftdi$EXE
