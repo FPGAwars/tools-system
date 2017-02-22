@@ -63,5 +63,4 @@ if [ $ARCH != "darwin" ]; then
 fi
 
 # -- Copy the executable into the packages/bin dir
-mkdir -p $PACKAGE_DIR/$NAME/bin
 cp examples/lsftdi$EXT $PACKAGE_DIR/$NAME/bin
