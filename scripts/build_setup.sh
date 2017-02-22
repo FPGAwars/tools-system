@@ -3,12 +3,24 @@
 EXT=""
 
 if [ $ARCH == "linux_x86_64" ]; then
-  CC=gcc
-  HOST=x86_64-linux-gnu
+  CC="gcc"
+  HOST="x86_64-linux-gnu"
 fi
 
+if [ $ARCH == "linux_i686" ]; then
+  CC="gcc -m32"
+  HOST="i686-linux-gnu"
+fi
 
+if [ $ARCH == "linux_armv7l" ]; then
+  CC="arm-linux-gnueabihf-gcc"
+  HOST="arm-linux-gnueabihf"
+fi
 
+if [ $ARCH == "linux_aarch64" ]; then
+  CC="aarch64-linux-gnu-gcc"
+  HOST="aarch64-linux-gnu"
+fi
 
 
 
