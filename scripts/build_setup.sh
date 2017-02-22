@@ -22,14 +22,18 @@ if [ $ARCH == "linux_aarch64" ]; then
   HOST="aarch64-linux-gnu"
 fi
 
-
-
-
-
-
-if [ $ARCH == "windows" ]; then
+if [ $ARCH == "windows_x86" ]; then
   EXT=".exe"
+  CC="i686-w64-mingw32-gcc"
+  HOST="i686-w64-mingw32"
 fi
+
+if [ $ARCH == "windows_amd64" ]; then
+  EXT=".exe"
+  CC="x86_64-w64-mingw32-gcc"
+  HOST="x86_64-w64-mingw32"
+fi
+
 
 if [ $ARCH == "darwin" ]; then
   J=$(($(sysctl -n hw.ncpu)-1))

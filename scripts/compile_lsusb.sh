@@ -36,9 +36,6 @@ $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/incl
 cd ..
 
 
-if [ $ARCH == "windows" ]; then
-  i686-w64-mingw32-gcc -o lsusb listdevs.c -lusb-1.0 -lpthread -I ../libusb -static -L $WORK_DIR/build-data/$ARCH/lib
-fi
 
 if [ $ARCH == "darwin" ]; then
   clang -o lsusb listdevs.c -lusb-1.0 -I ../libusb

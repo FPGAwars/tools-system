@@ -22,7 +22,7 @@ if [ $ARCH == "linux_aarch64" ]; then
   sudo apt-get autoremove -y
 fi
 
-if [ $ARCH == "windows" ]; then
+if [[ $ARCH == "windows_x86" || $ARCH == "windows_amd64" ]]; then
   sudo apt-get install -y build-essential mingw-w64
   sudo apt-get autoremove -y
 fi
