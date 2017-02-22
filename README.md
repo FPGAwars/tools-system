@@ -2,22 +2,38 @@
 
 ## Introduction
 
-[Apio](https://github.com/FPGAwars/apio) package Tool for listing the usb devices and retrieving information from the ftdi chips
+Static binaries of the **lsftdi** and **lsusb** tools. Packaged for [Apio](https://github.com/FPGAwars/apio).
+
+* lsftdi: display information about connected FTDI devices
+* lsusb: display information about USB buses in the system
 
 ## Usage
 
-Edit the target architectures in the `build.sh` script:
+Build:
 
 ```
-# -- Target architectures
-ARCHS=( linux_x86_64 linux_armv7l )
-# ARCHS=( linux_x86_64 linux_i686 linux_armv7l linux_aarch64 windows )
-# ARCHS=( darwin )
+bash build.sh "linux_x86_64 linux_armv7l"
 ```
 
-Run the script `./build.sh`
+Clean:
+
+```
+bash clean.sh "linux_x86_64 linux_armv7l"
+```
+
+Target architectures:
+* linux_x86_64
+* linux_i686
+* linux_armv7l
+* linux_aarch64
+* windows
+* darwin
 
 Final packages will be generated in **\_packages/build_ARCH/** directory.
+
+# Documentation
+
+[The project documentation is located in the wiki](https://github.com/FPGAwars/tools-system/wiki)
 
 ## Authors
 
@@ -25,7 +41,5 @@ Final packages will be generated in **\_packages/build_ARCH/** directory.
 * [Jesús Arroyo Torrens](https://github.com/Jesus89)
 
 ## License
-
-![](https://github.com/FPGAwars/tools-usb-ftdi/raw/master/doc/bq-logo-cc-sa-small-150px.png)
 
 Licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
