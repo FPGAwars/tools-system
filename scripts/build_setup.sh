@@ -30,12 +30,14 @@ if [ $ARCH == "windows_x86" ]; then
   EXT=".exe"
   CC="i686-w64-mingw32-gcc"
   HOST="i686-w64-mingw32"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win32.cmake"
 fi
 
 if [ $ARCH == "windows_amd64" ]; then
   EXT=".exe"
   CC="x86_64-w64-mingw32-gcc"
   HOST="x86_64-w64-mingw32"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win64.cmake"
 fi
 
 if [ $ARCH == "darwin" ]; then
