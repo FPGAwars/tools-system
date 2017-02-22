@@ -1,7 +1,5 @@
 # Build setup script
 
-EXT=""
-
 if [ $ARCH == "linux_x86_64" ]; then
   CC="gcc"
   HOST="x86_64-linux-gnu"
@@ -27,14 +25,14 @@ if [ $ARCH == "linux_aarch64" ]; then
 fi
 
 if [ $ARCH == "windows_x86" ]; then
-  EXT=".exe"
+  EXE=".exe"
   CC="i686-w64-mingw32-gcc"
   HOST="i686-w64-mingw32"
   CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win32.cmake"
 fi
 
 if [ $ARCH == "windows_amd64" ]; then
-  EXT=".exe"
+  EXE=".exe"
   CC="x86_64-w64-mingw32-gcc"
   HOST="x86_64-w64-mingw32"
   CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win64.cmake"
