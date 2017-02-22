@@ -65,6 +65,8 @@ do
         echo ">> CLEAN"
         ;;
       *)
+        echo ""
+        echo ">> ABORT"
         ;;
   esac
 

@@ -3,7 +3,7 @@
 VER=1.0.20
 LIBUSB=libusb-$VER
 TAR_LIBUSB=$LIBUSB.tar.bz2
-REL_LIBUSB=https://github.com/libusb/libusb/releases/download/v1.0.20/$TAR_LIBUSB
+REL_LIBUSB=https://github.com/libusb/libusb/releases/download/v$VER/$TAR_LIBUSB
 
 # -- Setup
 . $WORK_DIR/scripts/build_setup.sh
@@ -22,12 +22,13 @@ rsync -a $LIBUSB $BUILD_DIR --exclude .git
 cd $BUILD_DIR/$LIBUSB
 
 PREFIX=$BUILD_DIR/$LIBUSB/release
+#PREFIX=/usr/local
 
 #-- Build libusb
 if [ $ARCH == "darwin" ]; then
   ./configure --prefix=$PREFIX
 else
-  ./configure --host=$HOST --prefix=$PREFIX --enable-udev=no
+  ./configure --prefix=$PREFIX --host=$HOST --enable-udev=no
 fi
 make -j$J
 make install

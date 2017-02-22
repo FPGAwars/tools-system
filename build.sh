@@ -18,7 +18,7 @@ NAME=tools-system
 # -- Debug flags
 INSTALL_DEPS=1
 COMPILE_LSUSB=1
-COMPILE_LSFTDI=0
+COMPILE_LSFTDI=1
 CREATE_PACKAGE=0
 
 # -- Store current dir
