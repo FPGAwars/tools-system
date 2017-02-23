@@ -23,7 +23,7 @@ if [ $ARCH == "linux_aarch64" ]; then
   sudo apt-get autoremove -y
 fi
 
-if [[ $ARCH == "windows_x86" || $ARCH == "windows_amd64" ]]; then
+if [ ${ARCH:0:7} == "windows" ]; then
   sudo apt-get install -y build-essential cmake pkg-config \
                           mingw-w64
   sudo apt-get autoremove -y
