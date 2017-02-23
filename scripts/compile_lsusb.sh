@@ -22,7 +22,6 @@ rsync -a $LIBUSB $BUILD_DIR --exclude .git
 cd $BUILD_DIR/$LIBUSB
 
 PREFIX=$BUILD_DIR/$LIBUSB/release
-#PREFIX=/usr/local
 
 #-- Build libusb
 if [ $ARCH != "darwin" ]; then
