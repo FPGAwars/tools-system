@@ -52,6 +52,16 @@ function print {
   echo ""
 }
 
+# -- Check ARCHS
+if [ "$ARCHS" == "" ]; then
+  echo ""
+  echo "Usage:"
+  echo "  bash build.sh \"linux_x86_64 linux_i686\""
+  echo ""
+  echo "Target archs:"
+  echo "  $TARGET_ARCHS"
+fi
+
 # -- Loop
 for ARCH in ${ARCHS[@]}
 do

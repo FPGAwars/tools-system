@@ -12,13 +12,13 @@ Static binaries of the **lsftdi** and **lsusb** tools. Packaged for [Apio](https
 Build:
 
 ```
-bash build.sh "linux_x86_64 linux_armv7l"
+bash build.sh "linux_x86_64 linux_i686"
 ```
 
 Clean:
 
 ```
-bash clean.sh "linux_x86_64 linux_armv7l"
+bash clean.sh "linux_x86_64 linux_i686"
 ```
 
 Target architectures:
@@ -26,14 +26,17 @@ Target architectures:
 * linux_i686
 * linux_armv7l
 * linux_aarch64
-* windows
+* windows_x86
+* windows_amd64
 * darwin
 
-Final packages will be generated in **\_packages/build_ARCH/** directory.
+Final packages will be deployed in the **\_packages/build_ARCH/** directories.
+
+NOTE: *libftdi* and *libusb* libraries are generated for each architecture. In order to obtain a static *libusb* library, *udev* has been disabled.
 
 # Documentation
 
-[The project documentation is located in the wiki](https://github.com/FPGAwars/tools-system/wiki)
+[The project documentation is located in the wiki](https://github.com/FPGAwars/tools-system/wiki).
 
 ## Authors
 
@@ -42,4 +45,4 @@ Final packages will be generated in **\_packages/build_ARCH/** directory.
 
 ## License
 
-Licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)
+Licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
