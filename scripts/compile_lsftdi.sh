@@ -41,7 +41,7 @@ fi
 #-- Build lsftdi
 cd examples
 if [ $ARCH == "darwin" ]; then
-  $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I$PREFIX/include/libftdi1
+  $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I../src
 else
   $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
 fi
