@@ -9,7 +9,7 @@
 VERSION=1.1.0
 
 # -- Target architectures
-ARCHS=$1
+ARCH=$1
 TARGET_ARCHS="linux_x86_64 linux_i686 linux_armv7l linux_aarch64 windows_x86 windows_amd64 darwin"
 
 # -- Tools name
@@ -52,71 +52,70 @@ function print {
   echo ""
 }
 
-# -- Check ARCHS
-if [ "$ARCHS" == "" ]; then
+# -- Check ARCH
+if [[ $# > 1 ]]; then
   echo ""
-  echo "Usage:"
-  echo "  bash build.sh \"linux_x86_64 linux_i686\""
-  echo ""
-  echo "Target archs:"
-  echo "  $TARGET_ARCHS"
+  echo "Error: too many arguments"
+  exit 1
 fi
 
-# -- Loop
-for ARCH in ${ARCHS[@]}
-do
-
-  if [[ ! $TARGET_ARCHS =~ (^|[[:space:]])$ARCH([[:space:]]|$) ]]; then
-    echo ""
-    echo ">>> WRONG ARCHITECTURE $ARCH"
-    continue
-  fi
-
+if [[ $# < 1 ]]; then
   echo ""
-  echo ">>> ARCHITECTURE $ARCH"
+  echo "Usage: bash build.sh TARGET"
+  echo ""
+  echo "Targets: $TARGET_ARCHS"
+  exit 1
+fi
 
-  # -- Directory for compiling the tools
-  BUILD_DIR=$BUILDS_DIR/build_$ARCH
+if [[ $ARCH =~ [[:space:]] || ! $TARGET_ARCHS =~ (^|[[:space:]])$ARCH([[:space:]]|$) ]]; then
+  echo ""
+  echo ">>> WRONG ARCHITECTURE \"$ARCH\""
+  exit 1
+fi
 
-  # -- Directory for installating the target files
-  PACKAGE_DIR=$PACKAGES_DIR/build_$ARCH
+echo ""
+echo ">>> ARCHITECTURE \"$ARCH\""
 
-  # --------- Instal dependencies ------------------------------------
-  if [ $INSTALL_DEPS == "1" ]; then
+# -- Directory for compiling the tools
+BUILD_DIR=$BUILDS_DIR/build_$ARCH
 
-    print ">> Install dependencies"
-    . $WORK_DIR/scripts/install_dependencies.sh
+# -- Directory for installating the target files
+PACKAGE_DIR=$PACKAGES_DIR/build_$ARCH
 
-  fi
+# --------- Instal dependencies ------------------------------------
+if [ $INSTALL_DEPS == "1" ]; then
 
-  # -- Create the build dir
-  mkdir -p $BUILD_DIR
+  print ">> Install dependencies"
+  . $WORK_DIR/scripts/install_dependencies.sh
 
-  # -- Create the package folders
-  mkdir -p $PACKAGE_DIR/$NAME/bin
+fi
 
-  # --------- Compile lsusb ------------------------------------------
-  if [ $COMPILE_LSUSB == "1" ]; then
+# -- Create the build dir
+mkdir -p $BUILD_DIR
 
-    print ">> Compile lsusb"
-    . $WORK_DIR/scripts/compile_lsusb.sh
+# -- Create the package folders
+mkdir -p $PACKAGE_DIR/$NAME/bin
 
-  fi
+# --------- Compile lsusb ------------------------------------------
+if [ $COMPILE_LSUSB == "1" ]; then
 
-  # --------- Compile lsftdi -----------------------------------------
-  if [ $COMPILE_LSFTDI == "1" ]; then
+  print ">> Compile lsusb"
+  . $WORK_DIR/scripts/compile_lsusb.sh
 
-    print ">> Compile lsftdi"
-    . $WORK_DIR/scripts/compile_lsftdi.sh
+fi
 
-  fi
+# --------- Compile lsftdi -----------------------------------------
+if [ $COMPILE_LSFTDI == "1" ]; then
 
-  # --------- Create the package -------------------------------------
-  if [ $CREATE_PACKAGE == "1" ]; then
+  print ">> Compile lsftdi"
+  . $WORK_DIR/scripts/compile_lsftdi.sh
 
-    print ">> Create package"
-    . $WORK_DIR/scripts/create_package.sh
+fi
 
-  fi
+# --------- Create the package -------------------------------------
+if [ $CREATE_PACKAGE == "1" ]; then
 
-done
+  print ">> Create package"
+  . $WORK_DIR/scripts/create_package.sh
+
+fi
