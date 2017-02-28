@@ -1,0 +1,41 @@
+sudo: required
+dist: trusty
+
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      env: TARGET=linux_x86_64
+    - os: linux
+      env: TARGET=linux_i686
+    - os: linux
+      env: TARGET=linux_armv7l
+    - os: linux
+      env: TARGET=linux_aarch64
+    - os: linux
+      env: TARGET=windows_x86
+    - os: linux
+      env: TARGET=windows_amd64
+    - os: osx
+      env: TARGET=darwin
+
+before_script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -y -qq; fi
+
+script:
+  - bash build.sh $TARGET
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then md5 _packages/**/*.tar.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then md5sum _packages/**/*.tar.gz; fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: P3t3txMvsfFXymL/Z6AVsNTygLytSL2F/GNdLpvB3ULwz0qvVzwW0ep0DZIbUxgTbOR341zUpGlKYMaS0EvUAt3TrIATa4nI9CYKavRT8CKrAUyBg2OAN9+gVmBzOEgGvgGkTjzd1OUHn0YjYjYwV2qKXHwUi21q9rXjwc20qB+lVNWkdPe3sOZhI7yUmh3WcU1jGtehQFYlz40i6rS+ivAKC8FN4wfBW2OJVCZ67q9P+FUbpXccD5n3A/09DGhaatWqD7ULwBkl75Rmk4L51LeWKJvOGB3Af2uLqAQ18gkmBpydccqmErfldOKuuhnMgDzkLKfWg7jbvCBIqaFhPIOo4p6nBAnGrQFklwv7obwEtSbqnupP0REj8p+igMMANZYtVVweSrhw1fqHOFhNHC8abmVzOaos6rh1e9Nm2b4O0QCRIt1Wxc5iJy8Bfo4C8FBiSAHvgyKi1ZgPgnU1IfEw0Z94XYbxlOunXyh3YA5FcLUrCAfFAszGita0Bl9wOJn7bMB0nZhhpxLcms6iT0FH7na7tPl72MmjNEwLmns3/HyzUxTofUnsGuw669n73xvO/wQRqQgzUT8EW6m/25+kRWd8kWo5vUYOyVpci/QpVpJ5xytbWK99UYXfwMTBhh07Q3Wdpl7uDVzs25GHYezHXBxlAYbt5flYsI9tprk=
+  file:
+    - _packages/**/*.tar.gz
+  file_glob: true
+  skip_cleanup: true
+  on:
+    all_branches: true
