@@ -26,6 +26,8 @@ before_script:
 
 script:
   - bash build.sh $TARGET
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then md5 _packages/**/*.tar.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then md5sum _packages/**/*.tar.gz; fi
 
 deploy:
   provider: releases
