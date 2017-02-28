@@ -1,6 +1,47 @@
 {
   "tools-system":
     [
-      
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-darwin-1.1.0.tar.gz",
+        "sha1": "62fdb6b2714da062375cc745c4b7bdfd182a5695",
+        "version": "1.1.0",
+        "system": ["darwin", "darwin_x86_64", "darwin_i386"]
+      },
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-linux_aarch64-1.1.0.tar.gz",
+        "sha1": "a213e907956cffd6ac13713f7e9ae215af7d36c9",
+        "version": "1.1.0",
+        "system": ["linux_aarch64"]
+      },
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-linux_armv7l-1.1.0.tar.gz",
+        "sha1": "eaa9592cb27887320342ed80bfec12498e7f4554",
+        "version": "1.1.0",
+        "system": ["linux_armv7l"]
+      },
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-linux_i686-1.1.0.tar.gz",
+        "sha1": "e671d02590a0fe8c4e6867ac9ce115314c8d9249",
+        "version": "1.1.0",
+        "system": ["linux_i686"]
+      },
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-linux_x86_64-1.1.0.tar.gz",
+        "sha1": "0f229a7d2952dd86390d1faa5e1268af8a773a17",
+        "version": "1.1.0",
+        "system": ["linux_x86_64"]
+      },
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-windows_amd64-1.1.0.tar.gz",
+        "sha1": "a397ecb4b73ef06b370ad8f36c4482a110d5cec1",
+        "version": "1.1.0",
+        "system": ["windows_amd64"]
+      }
+      {
+        "url": "https://github.com/FPGAwars/tools-system/releases/download/v1.1.0/tools-system-windows_x86-1.1.0.tar.gz",
+        "sha1": "84d2695b3872e9128c4a318b837dcd16d525d04c",
+        "version": "1.1.0",
+        "system": ["windows", "windows_x86"]
+      }
     ]
 }

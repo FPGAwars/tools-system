@@ -1,5 +1,7 @@
 # Tools-system
 
+[![Build Status](https://travis-ci.org/FPGAwars/tools-system.svg?branch=v1.1.0)](https://travis-ci.org/FPGAwars/tools-system)
+
 ## Introduction
 
 Static binaries of the **lsftdi** and **lsusb** tools. Packaged for [Apio](https://github.com/FPGAwars/apio).
