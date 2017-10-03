@@ -12,6 +12,12 @@ if [ $ARCH == "linux_i686" ]; then
   CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-m32.cmake"
 fi
 
+if [ $ARCH == "linux_armv6l" ]; then
+  CC="arm-linux-gnueabihf-gcc -marm -march=armv6"
+  HOST="arm-linux-gnueabihf"
+  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-armhf.cmake"
+fi
+
 if [ $ARCH == "linux_armv7l" ]; then
   CC="arm-linux-gnueabihf-gcc"
   HOST="arm-linux-gnueabihf"

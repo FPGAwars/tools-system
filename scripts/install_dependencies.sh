@@ -11,7 +11,7 @@ if [ $ARCH == "linux_i686" ]; then
   sudo apt-get autoremove -y
 fi
 
-if [ $ARCH == "linux_armv7l" ]; then
+if [ $ARCH == "linux_armv6l" ] || [ $ARCH == "linux_armv7l" ]; then
   sudo apt-get install -y build-essential cmake pkg-config \
                           gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
   sudo apt-get autoremove -y
