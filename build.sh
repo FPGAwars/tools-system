@@ -21,6 +21,7 @@ NAME=tools-system
 # -- Debug flags
 INSTALL_DEPS=1
 COMPILE_LSUSB=1
+COMPILE_LCONFUSE=1
 COMPILE_LSFTDI=1
 CREATE_PACKAGE=1
 
@@ -104,6 +105,14 @@ if [ $COMPILE_LSUSB == "1" ]; then
 
   print ">> Compile lsusb"
   . $WORK_DIR/scripts/compile_lsusb.sh
+
+fi
+
+# --------- Compile lconfuse ------------------------------------------
+if [ $COMPILE_LCONFUSE == "1" ]; then
+
+  print ">> Compile lconfuse"
+  . $WORK_DIR/scripts/compile_lconfuse.sh
 
 fi
 

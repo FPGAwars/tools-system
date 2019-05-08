@@ -1,5 +1,4 @@
 # -- Compile lsusb script
-
 VER=1.0.22
 LIBUSB=libusb-$VER
 TAR_LIBUSB=$LIBUSB.tar.bz2
@@ -25,10 +24,7 @@ PREFIX=$BUILD_DIR/$LIBUSB/release
 
 #-- Build libusb
 if [ $ARCH != "darwin" ]; then
-    echo   "****** --prefix=$PREFIX --host=$HOST --enable-udev=no $CONFIG_FLAGS"
-
   ./configure --prefix=$PREFIX --host=$HOST --enable-udev=no $CONFIG_FLAGS
-  echo "****** make -j$J"
   make -j$J
   make install
 fi
@@ -38,8 +34,6 @@ cd examples
 if [ $ARCH == "darwin" ]; then
   $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb
 else
-    
-  echo "**** $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/include/libusb-1.0"
   $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L$PREFIX/lib -I$PREFIX/include/libusb-1.0
 fi
 cd ..
