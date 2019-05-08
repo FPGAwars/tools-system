@@ -1,11 +1,11 @@
 # -- Compile lsftdi script
 
-VER=1.2
+VER=1.4
 LIBFTDI1=libftdi1-$VER
 TAR_LIBFTDI1=$LIBFTDI1.tar.bz2
 REL_LIBFTDI1=https://www.intra2net.com/en/developer/libftdi/download/$TAR_LIBFTDI1
 
-VER=1.0.20
+VER=1.0.22
 LIBUSB=libusb-$VER
 
 # -- Setup

@@ -1,6 +1,6 @@
 # -- Compile lsusb script
 
-VER=1.0.20
+VER=1.0.22
 LIBUSB=libusb-$VER
 TAR_LIBUSB=$LIBUSB.tar.bz2
 REL_LIBUSB=https://github.com/libusb/libusb/releases/download/v$VER/$TAR_LIBUSB

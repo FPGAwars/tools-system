@@ -3,6 +3,9 @@
 #      System tools builder      #
 ##################################
 
+# Set english language for propper pattern matching
+export LC_ALL=C
+
 # Generate tools-system-arch-ver.tar.gz from source code
 # sources: https://github.com/FPGAwars/tools-system
 
