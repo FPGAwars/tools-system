@@ -49,8 +49,8 @@ cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
-  test_bin examples/lsftdi
+  test_bin examples/lsftdi$EXE
 fi
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsftdi $PACKAGE_DIR/$NAME/bin/lsftdi$EXE
+cp examples/lsftdi$EXE $PACKAGE_DIR/$NAME/bin/lsftdi$EXE
