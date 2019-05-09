@@ -44,7 +44,7 @@ fi
 cd examples
 if [ $ARCH == "darwin" ]; then
     $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0  -I../src
-    $CC -o ../release/bin/ftdi_eeprom ../ftdi_eeprom/main.c -lftdi1  -lusb-1.0 -lconfuse -lpthreadi -I../src -I../../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1  -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
+    $CC -o ../release/bin/ftdi_eeprom ../ftdi_eeprom/main.c -lftdi1 -lusb-1.0  -I../src -I$LIBUSB_PREFIX/include/libusb-1.0  -I../../../../build-data/includes -L$PREFIX/lib  -I$PREFIX/include/libftdi1  -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
 
 else
     $CC -o lsftdi find_all.c -static -lftdi1  -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
