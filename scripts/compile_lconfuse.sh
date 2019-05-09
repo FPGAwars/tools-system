@@ -17,7 +17,6 @@ test -e $TAR_LIBCONFUSE || wget $REL_LIBCONFUSE
 tar zxf $TAR_LIBCONFUSE
 
 # -- Copy the upstream sources into the build directory
-test -e 
 rsync -a $LIBCONFUSE $BUILD_DIR --exclude .git
 
  
@@ -25,14 +24,10 @@ cd $BUILD_DIR/$LIBCONFUSE
 
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
-#-- Build libusb
-if [ $ARCH != "darwin" ]; then
-
-    ./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
-
-    make
-    make install
-fi
+#-- Build libconfuse
+./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
+make
+make install
 
 #-- Build simple
 cd examples
