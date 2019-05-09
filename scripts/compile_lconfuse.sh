@@ -9,7 +9,6 @@ REL_LIBCONFUSE=https://github.com/martinh/libconfuse/releases/download/v$VER/$TA
 . $WORK_DIR/scripts/build_setup.sh
 
 cd $UPSTREAM_DIR
-
 # -- Check and download the release
 test -e $TAR_LIBCONFUSE || wget $REL_LIBCONFUSE
 
@@ -24,15 +23,17 @@ cd $BUILD_DIR/$LIBCONFUSE
 
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
-#-- Build libconfuse
-./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
-make
-make install
+if [ $ARCH != "darwin" ]; then
+	#-- Build libconfuse
+	./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
+	make
+	make install
+fi
 
 #-- Build simple
 cd examples
 if [ $ARCH == "darwin" ]; then
-  $CC -o simple simple.c -lconfuse -L$PREFIX/lib -I$PREFIX/include
+  $CC -o simple simple.c -lconfuse -I../src
 else
   $CC -o simple simple.c -static -lconfuse  -L$PREFIX/lib -I$PREFIX/include
 fi
@@ -41,4 +42,6 @@ cd ..
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
   test_bin examples/simple$EXE
+else
+  test_bin examples/simple NO_CHECK_STATIC
 fi
