@@ -31,11 +31,11 @@ make install
 
 #-- Build simple
 cd examples
-#if [ $ARCH == "darwin" ]; then
-#  $CC -o simple simple.c -lconfuse -I../libconfuse
-#else
+if [ $ARCH == "darwin" ]; then
+  $CC -o simple simple.c -lconfuse -L$PREFIX/lib -I$PREFIX/include
+else
   $CC -o simple simple.c -static -lconfuse  -L$PREFIX/lib -I$PREFIX/include
-#fi
+fi
 cd ..
 
 # -- Test the generated executables
