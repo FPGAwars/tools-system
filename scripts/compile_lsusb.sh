@@ -41,8 +41,8 @@ cd ..
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
-  test_bin examples/lsusb$EXE
+  test_bin examples/lsusb
 fi
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsusb$EXE $PACKAGE_DIR/$NAME/bin/lsusb$EXE
+cp examples/lsusb $PACKAGE_DIR/$NAME/bin/lsusb$EXE

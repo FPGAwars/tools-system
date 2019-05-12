@@ -39,8 +39,4 @@ fi
 cd ..
 
 # -- Test the generated executables
-if [ $ARCH != "darwin" ]; then
-  test_bin examples/simple$EXE
-else
-  test_bin examples/simple
-fi
+test_bin examples/simple
