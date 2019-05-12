@@ -65,8 +65,8 @@ if [ $ARCH != "darwin" ]; then
         test_bin release/bin/libftdi1-config
     fi
 else
-    test_bin examples/lsftdi NO_CHECK_STATIC
-    test_bin ftdi_eeprom/ftdi_eeprom NO_CHECK_STATIC
+    test_bin examples/lsftdi
+    test_bin ftdi_eeprom/ftdi_eeprom
 fi
 
 # -- Copy the executable into the packages/bin dir

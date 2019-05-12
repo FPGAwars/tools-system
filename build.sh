@@ -43,7 +43,7 @@ mkdir -p $UPSTREAM_DIR
 
 # -- Test script function
 function test_bin {
-  $WORK_DIR/test/test_bin.sh $1 $2
+  $WORK_DIR/test/test_bin.sh $1
   if [ $? != "0" ]; then
     exit 1
   fi
@@ -108,7 +108,7 @@ if [ $COMPILE_LSUSB == "1" ]; then
 
 fi
 
-# --------- Compile lconfuse ------------------------------------------
+# --------- Compile lconfuse ---------------------------------------
 if [ $COMPILE_LCONFUSE == "1" ]; then
 
   print ">> Compile lconfuse"

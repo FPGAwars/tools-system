@@ -8,7 +8,7 @@ echo "" >&2
 echo "Testing $FILE file" >&2
 echo "------------------------------" >&2
 
-function test0 {
+function test_base {
     if "${@:2}"
     then
         echo "$1" >&2
@@ -18,15 +18,15 @@ function test0 {
     fi
 }
 
-function test1 {
+function test_exists {
     test0 "- 1. File exists" test -e $1
 }
 
-function test2 {
+function test_exec {
     test0 "- 2. File is executable" test -x $1
 }
 
-function test3 {
+function test_static {
     output=$(ldd $1 | grep "not a dynamic executable")
     test0 "- 3. File is static" test -n "$output"
 }
@@ -35,11 +35,12 @@ file $FILE
 
 echo "------------------------------" >&2
 
-test1 $FILE
-test2 $FILE
-if [ -z $2 ]; then
-	test3 $FILE
+test_exists $FILE
+test_exec $FILE
+if [ $ARCH != "darwin" ]; then
+	test_static $FILE
 fi
+
 echo "------------------------------" >&2
 echo "All tests [PASSED]" >&2
 echo "" >&2

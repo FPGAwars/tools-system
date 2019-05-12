@@ -18,7 +18,7 @@ tar zxf $TAR_LIBCONFUSE
 # -- Copy the upstream sources into the build directory
 rsync -a $LIBCONFUSE $BUILD_DIR --exclude .git
 
- 
+
 cd $BUILD_DIR/$LIBCONFUSE
 
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
@@ -43,5 +43,5 @@ cd ..
 if [ $ARCH != "darwin" ]; then
   test_bin examples/simple$EXE
 else
-  test_bin examples/simple NO_CHECK_STATIC
+  test_bin examples/simple
 fi
