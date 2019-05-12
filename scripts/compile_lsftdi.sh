@@ -8,6 +8,9 @@ REL_LIBFTDI1=https://www.intra2net.com/en/developer/libftdi/download/$TAR_LIBFTD
 VER=1.0.22
 LIBUSB=libusb-$VER
 
+VER=3.2.2
+LIBCONFUSE=confuse-$VER
+
 # -- Setup
 . $WORK_DIR/scripts/build_setup.sh
 
@@ -26,8 +29,7 @@ cd $BUILD_DIR/$LIBFTDI1
 
 PREFIX=$BUILD_DIR/$LIBFTDI1/release
 LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
-LIBCONFUSE_VER=3.2.2
-LIBCONFUSE=confuse-$LIBCONFUSE_VER
+LIBCONFUSE_PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libftdi
 if [ $ARCH != "darwin" ]; then
@@ -52,9 +54,9 @@ cd ..
 #-- Build ftdi_eeprom
 cd ftdi_eeprom
 if [ $ARCH == "darwin" ]; then
-  $CC -o ftdi_eeprom main.c -lftdi1 -lusb-1.0 -lconfuse -lpthread -I../../src -I../../../../build-data/includes -I$BUILD_DIR/$LIBUSB/libusb -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBCONFUSE/src
+  $CC -o ftdi_eeprom main.c -lftdi1 -lusb-1.0 -lconfuse -I../src -I$WORK_DIR/build-data/includes -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBUSB/libusb -I$BUILD_DIR/$LIBCONFUSE/src
 else
-  $CC -o ftdi_eeprom main.c -static -lftdi1 -lusb-1.0 -lconfuse -lpthread -I../../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1 -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
+  $CC -o ftdi_eeprom main.c -static -lftdi1 -lusb-1.0 -lconfuse -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -L$LIBCONFUSE_PREFIX/lib -I$WORK_DIR/build-data/includes -I$PREFIX/include/libftdi1 -I$LIBUSB_PREFIX/include/libusb-1.0 -I$LIBCONFUSE_PREFIX/include
 fi
 cd ..
 
