@@ -1,4 +1,5 @@
 # -- Compile lsusb script
+
 VER=1.0.22
 LIBUSB=libusb-$VER
 TAR_LIBUSB=$LIBUSB.tar.bz2

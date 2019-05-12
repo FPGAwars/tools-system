@@ -18,13 +18,12 @@ tar zxf $TAR_LIBCONFUSE
 # -- Copy the upstream sources into the build directory
 rsync -a $LIBCONFUSE $BUILD_DIR --exclude .git
 
-
 cd $BUILD_DIR/$LIBCONFUSE
 
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
+#-- Build libconfuse
 if [ $ARCH != "darwin" ]; then
-	#-- Build libconfuse
 	./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
 	make
 	make install
@@ -35,7 +34,7 @@ cd examples
 if [ $ARCH == "darwin" ]; then
   $CC -o simple simple.c -lconfuse -I../src
 else
-  $CC -o simple simple.c -static -lconfuse  -L$PREFIX/lib -I$PREFIX/include
+  $CC -o simple simple.c -static -lconfuse -L$PREFIX/lib -I$PREFIX/include
 fi
 cd ..
 

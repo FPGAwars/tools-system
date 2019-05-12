@@ -43,27 +43,23 @@ fi
 #-- Build lsftdi
 cd examples
 if [ $ARCH == "darwin" ]; then
-    $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0  -I../src
+  $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I../src
 else
-    $CC -o lsftdi find_all.c -static -lftdi1  -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
+  $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
 fi
 cd ..
 
 #-- Build ftdi_eeprom
 if [ $ARCH == "darwin" ]; then
-    $CC -o ftdi_eeprom/ftdi_eeprom ftdi_eeprom/main.c -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../src -I../../../build-data/includes -I$BUILD_DIR/$LIBUSB/libusb -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBCONFUSE/src
+    $CC -o ftdi_eeprom/ftdi_eeprom ftdi_eeprom/main.c -lftdi1 -lusb-1.0 -lconfuse -lpthread -I../src -I../../../build-data/includes -I$BUILD_DIR/$LIBUSB/libusb -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBCONFUSE/src
 else
-    $CC -o release/bin/ftdi_eeprom ftdi_eeprom/main.c -static -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1 -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
+    $CC -o release/bin/ftdi_eeprom ftdi_eeprom/main.c -static -lftdi1 -lusb-1.0 -lconfuse -lpthread -I../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1 -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
 fi
 
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
     test_bin examples/lsftdi$EXE
     test_bin release/bin/ftdi_eeprom$EXE
-
-    if [ $ARCH != "windows_x86" ] && [ $ARCH != "windows_amd64" ]; then
-        test_bin release/bin/libftdi1-config
-    fi
 else
     test_bin examples/lsftdi
     test_bin ftdi_eeprom/ftdi_eeprom
@@ -75,8 +71,4 @@ if [ $ARCH == "darwin" ]; then
 	cp ftdi_eeprom/ftdi_eeprom $PACKAGE_DIR/$NAME/bin/ftdi_eeprom
 else
 	cp release/bin/ftdi_eeprom$EXE $PACKAGE_DIR/$NAME/bin/ftdi_eeprom$EXE
-fi
-
-if [ $ARCH != "windows_x86" ] && [ $ARCH != "windows_amd64" ] && [ $ARCH != "darwin" ]; then
-    cp release/bin/libftdi1-config $PACKAGE_DIR/$NAME/bin/libftdi1-config
 fi
