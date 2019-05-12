@@ -1,4 +1,4 @@
-# -- Compile lsusb script
+# -- Compile libconfuse script
 
 VER=3.2.2
 LIBCONFUSE=confuse-$VER
@@ -24,9 +24,9 @@ PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libconfuse
 if [ $ARCH != "darwin" ]; then
-	./configure --prefix=$PREFIX   --host=$HOST $CONFIG_FLAGS
-	make
-	make install
+  ./configure --prefix=$PREFIX --host=$HOST $CONFIG_FLAGS
+  make
+  make install
 fi
 
 #-- Build simple

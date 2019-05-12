@@ -19,16 +19,16 @@ function test_base {
 }
 
 function test_exists {
-    test0 "- 1. File exists" test -e $1
+    test_base "- 1. File exists" test -e $1
 }
 
 function test_exec {
-    test0 "- 2. File is executable" test -x $1
+    test_base "- 2. File is executable" test -x $1
 }
 
 function test_static {
     output=$(ldd $1 | grep "not a dynamic executable")
-    test0 "- 3. File is static" test -n "$output"
+    test_base "- 3. File is static" test -n "$output"
 }
 
 file $FILE
