@@ -40,7 +40,6 @@ NOTE: *libftdi* and *libusb* libraries are generated for each architecture. In o
 
 [The project documentation is located in the wiki](https://github.com/FPGAwars/tools-system/wiki).
 
-
 ## Authors
 
 * [Juan González-Gómez (Obijuan)](https://github.com/Obijuan)

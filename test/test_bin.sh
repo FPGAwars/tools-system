@@ -4,8 +4,6 @@
 
 FILE=$1
 
-
-
 echo "" >&2
 echo "Testing $FILE file" >&2
 echo "------------------------------" >&2

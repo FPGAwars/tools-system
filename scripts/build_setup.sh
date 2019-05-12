@@ -3,7 +3,6 @@
 if [ $ARCH == "linux_x86_64" ]; then
   CC="gcc"
   HOST="x86_64-linux-gnu"
-  
 fi
 
 if [ $ARCH == "linux_i686" ]; then

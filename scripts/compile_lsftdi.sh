@@ -44,16 +44,20 @@ fi
 cd examples
 if [ $ARCH == "darwin" ]; then
     $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0  -I../src
-    $CC -o ../ftdi_eeprom/ftdi_eeprom ../ftdi_eeprom/main.c -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../src -I../../../../build-data/includes  -I$BUILD_DIR/$LIBUSB/libusb -I$PREFIX/include/libftdi1  -I$BUILD_DIR/$LIBCONFUSE/src
 else
     $CC -o lsftdi find_all.c -static -lftdi1  -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
-    $CC -o ../release/bin/ftdi_eeprom ../ftdi_eeprom/main.c -static -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1  -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
 fi
 cd ..
 
+#-- Build ftdi_eeprom
+if [ $ARCH == "darwin" ]; then
+    $CC -o ftdi_eeprom/ftdi_eeprom ftdi_eeprom/main.c -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../src -I../../../build-data/includes -I$BUILD_DIR/$LIBUSB/libusb -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBCONFUSE/src
+else
+    $CC -o release/bin/ftdi_eeprom ftdi_eeprom/main.c -static -lftdi1  -lusb-1.0 -lconfuse -lpthread -I../../../build-data/includes -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$LIBUSB_PREFIX/include/libusb-1.0 -I$PREFIX/include/libftdi1 -L$BUILD_DIR/$LIBCONFUSE/release/lib -I$BUILD_DIR/$LIBCONFUSE/release/include
+fi
+
 # -- Test the generated executables
 if [ $ARCH != "darwin" ]; then
-
     test_bin examples/lsftdi$EXE
     test_bin release/bin/ftdi_eeprom$EXE
 
@@ -63,9 +67,7 @@ if [ $ARCH != "darwin" ]; then
 else
     test_bin examples/lsftdi NO_CHECK_STATIC
     test_bin ftdi_eeprom/ftdi_eeprom NO_CHECK_STATIC
-
 fi
-
 
 # -- Copy the executable into the packages/bin dir
 cp examples/lsftdi$EXE $PACKAGE_DIR/$NAME/bin/lsftdi$EXE
