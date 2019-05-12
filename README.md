@@ -45,6 +45,9 @@ NOTE: *libftdi* and *libusb* libraries are generated for each architecture. In o
 * [Juan González-Gómez (Obijuan)](https://github.com/Obijuan)
 * [Jesús Arroyo Torrens](https://github.com/Jesus89)
 
+## Contributors
+* [Carlos Venegas Arrabe (cavearr)](https://github.com/cavearr)
+
 ## License
 
 Licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).

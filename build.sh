@@ -3,10 +3,13 @@
 #      System tools builder      #
 ##################################
 
+# Set english language for propper pattern matching
+export LC_ALL=C
+
 # Generate tools-system-arch-ver.tar.gz from source code
 # sources: https://github.com/FPGAwars/tools-system
 
-VERSION=1.1.0
+VERSION=1.1.1-beta
 
 # -- Target architectures
 ARCH=$1
@@ -18,6 +21,7 @@ NAME=tools-system
 # -- Debug flags
 INSTALL_DEPS=1
 COMPILE_LSUSB=1
+COMPILE_LCONFUSE=1
 COMPILE_LSFTDI=1
 CREATE_PACKAGE=1
 
@@ -101,6 +105,14 @@ if [ $COMPILE_LSUSB == "1" ]; then
 
   print ">> Compile lsusb"
   . $WORK_DIR/scripts/compile_lsusb.sh
+
+fi
+
+# --------- Compile lconfuse ---------------------------------------
+if [ $COMPILE_LCONFUSE == "1" ]; then
+
+  print ">> Compile lconfuse"
+  . $WORK_DIR/scripts/compile_lconfuse.sh
 
 fi
 
