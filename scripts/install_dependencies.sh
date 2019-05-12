@@ -30,8 +30,14 @@ if [ ${ARCH:0:7} == "windows" ]; then
 fi
 
 if [ $ARCH == "darwin" ]; then
-  DEPS="pkg-config libusb libftdi wget"
-  brew update
+  which -s brew
+  if [[ $? != 0 ]] ; then
+      # Install Homebrew
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  else
+      brew update
+  fi
+  DEPS="pkg-config libusb libftdi wget confuse"
   brew install --force $DEPS
   brew unlink $DEPS && brew link --force $DEPS
 fi

@@ -1,10 +1,10 @@
 #!/bin/sh
 
-#echo "> travis login --org"
+#echo "> travis login"
 #travis login --org
 
 echo "> travis token"
-travis token
+travis token --org
 
 echo "\n> Enter the token: "
 read TOKEN
