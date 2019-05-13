@@ -42,5 +42,9 @@ if [ $ARCH == "darwin" ]; then
   CC="clang"
   J=$(($(sysctl -n hw.ncpu)-1))
 else
-  J=$(($(nproc)-1))
+  #support for 1cpu machines
+  J=`nproc`
+  if [ $J -gt 1 ]; then
+	  J=$(($(nproc)-1))
+  fi
 fi
