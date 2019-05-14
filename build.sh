@@ -9,7 +9,7 @@ export LC_ALL=C
 # Generate tools-system-arch-ver.tar.gz from source code
 # sources: https://github.com/FPGAwars/tools-system
 
-VERSION=1.1.1-beta
+VERSION=1.1.1
 
 # -- Target architectures
 ARCH=$1
