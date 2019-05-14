@@ -1,6 +1,6 @@
 # Tools-system
 
-[![Build Status](https://travis-ci.org/FPGAwars/tools-system.svg?branch=v1.1.0)](https://travis-ci.org/FPGAwars/tools-system)
+[![Build Status](https://travis-ci.org/FPGAwars/tools-system.svg?branch=v1.1.1)](https://travis-ci.org/FPGAwars/tools-system)
 
 ## Introduction
 
