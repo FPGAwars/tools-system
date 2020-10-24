@@ -134,7 +134,7 @@ fi
 if [ $CREATE_PACKAGE == "1" ]; then
 
   print ">> Create package"
-  # shellcheck source=scripts/compile_lsftdi.sh
-  . "$WORK_DIR"/scripts/compile_lsftdi.sh
+  # shellcheck source=scripts/create_package.sh
+  . "$WORK_DIR"/scripts/create_package.sh
 
 fi

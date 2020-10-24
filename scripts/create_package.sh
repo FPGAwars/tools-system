@@ -43,4 +43,4 @@ fi
 
 cd "$PACKAGE_DIR"/"$NAME" || exit
 
-tar -czvf ../"$NAME"-"$ARCH"-"$VERSION".tar.gz ./*glob*
+tar -czvf ../"$NAME"-"$ARCH"-"$VERSION".tar.gz ./*
