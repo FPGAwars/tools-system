@@ -49,12 +49,6 @@ function test_bin {
   then
     exit 1
   fi
-
-
-
-  #if [ $? != "0" ]; then
-  #  exit 1
-  #fi
 }
 
 # -- Print function

@@ -41,8 +41,10 @@ else
 fi
 cd ..
 
+echo "-----> EXE: $EXE"
+
 # -- Test the generated executables
-test_bin examples/lsusb
+test_bin examples/lsusb$EXE
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsusb "$PACKAGE_DIR"/"$NAME"/bin/lsusb$EXE
+cp examples/lsusb$EXE "$PACKAGE_DIR"/"$NAME"/bin/lsusb$EXE
