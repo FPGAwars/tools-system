@@ -1,50 +1,52 @@
+#!/bin/bash
 # Build setup script
 
-if [ $ARCH == "linux_x86_64" ]; then
-  CC="gcc"
-  HOST="x86_64-linux-gnu"
+if [ "$ARCH" == "linux_x86_64" ]; then
+  export CC="gcc"
+  export HOST="x86_64-linux-gnu"
 fi
 
-if [ $ARCH == "linux_i686" ]; then
-  CC="gcc -m32"
-  HOST="i686-linux-gnu"
-  CONFIG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-m32.cmake"
+if [ "$ARCH" == "linux_i686" ]; then
+  export CC="gcc -m32"
+  export HOST="i686-linux-gnu"
+  export CONFIG_FLAGS="CFLAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32"
+  export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-m32.cmake"
 fi
 
-if [ $ARCH == "linux_armv7l" ]; then
-  CC="arm-linux-gnueabihf-gcc"
-  HOST="arm-linux-gnueabihf"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-armhf.cmake"
+if [ "$ARCH" == "linux_armv7l" ]; then
+  export CC="arm-linux-gnueabihf-gcc"
+  export HOST="arm-linux-gnueabihf"
+  export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-armhf.cmake"
 fi
 
-if [ $ARCH == "linux_aarch64" ]; then
-  CC="aarch64-linux-gnu-gcc"
-  HOST="aarch64-linux-gnu"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-aarch64.cmake"
+if [ "$ARCH" == "linux_aarch64" ]; then
+  export CC="aarch64-linux-gnu-gcc"
+  export HOST="aarch64-linux-gnu"
+  export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-aarch64.cmake"
 fi
 
-if [ $ARCH == "windows_x86" ]; then
-  EXE=".exe"
-  CC="i686-w64-mingw32-gcc"
-  HOST="i686-w64-mingw32"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win32.cmake"
+if [ "$ARCH" == "windows_x86" ]; then
+  export EXE=".exe"
+  export CC="i686-w64-mingw32-gcc"
+  export HOST="i686-w64-mingw32"
+  export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win32.cmake"
 fi
 
-if [ $ARCH == "windows_amd64" ]; then
-  EXE=".exe"
-  CC="x86_64-w64-mingw32-gcc"
-  HOST="x86_64-w64-mingw32"
-  CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win64.cmake"
+if [ "$ARCH" == "windows_amd64" ]; then
+  export EXE=".exe"
+  export CC="x86_64-w64-mingw32-gcc"
+  export HOST="x86_64-w64-mingw32"
+  export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win64.cmake"
 fi
 
-if [ $ARCH == "darwin" ]; then
-  CC="clang"
-  J=$(($(sysctl -n hw.ncpu)-1))
+if [ "$ARCH" == "darwin" ]; then
+  export CC="clang"
+  export J=$(($(sysctl -n hw.ncpu)-1))
 else
   #support for 1cpu machines
-  J=`nproc`
-  if [ $J -gt 1 ]; then
-	  J=$(($(nproc)-1))
+  J=$(nproc)
+  export J
+  if [ "$J" -gt 1 ]; then
+	  export J=$(($(nproc)-1))
   fi
 fi
