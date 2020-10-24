@@ -1,3 +1,4 @@
+#!/bin/bash
 # -- Compile lsftdi script
 
 VER=1.4
@@ -12,9 +13,10 @@ VER=3.2.2
 LIBCONFUSE=confuse-$VER
 
 # -- Setup
-. $WORK_DIR/scripts/build_setup.sh
+# shellcheck source=build_setup.sh
+. "$WORK_DIR"/scripts/build_setup.sh
 
-cd $UPSTREAM_DIR
+cd "$UPSTREAM_DIR" || exit
 
 # -- Check and download the release
 test -e $TAR_LIBFTDI1 || wget $REL_LIBFTDI1
@@ -23,40 +25,40 @@ test -e $TAR_LIBFTDI1 || wget $REL_LIBFTDI1
 tar jxf $TAR_LIBFTDI1
 
 # -- Copy the upstream sources into the build directory
-rsync -a $LIBFTDI1 $BUILD_DIR --exclude .git
+rsync -a "$LIBFTDI1" "$BUILD_DIR" --exclude .git
 
-cd $BUILD_DIR/$LIBFTDI1
+cd "$BUILD_DIR"/"$LIBFTDI1" || exit
 
 PREFIX=$BUILD_DIR/$LIBFTDI1/release
 LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
 LIBCONFUSE_PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libftdi
-if [ $ARCH != "darwin" ]; then
+if [ "$ARCH" != "darwin" ]; then
   mkdir -p build
-  cd build
+  cd build || exit
   export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
-  cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
+  cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
   make -j$J
   make install
   cd ..
 fi
 
 #-- Build lsftdi
-cd examples
-if [ $ARCH == "darwin" ]; then
+cd examples || exit
+if [ "$ARCH" == "darwin" ]; then
   $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I../src
 else
-  $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -I$PREFIX/include/libftdi1
+  $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L"$PREFIX"/lib -L"$LIBUSB_PREFIX"/lib -I"$PREFIX"/include/libftdi1
 fi
 cd ..
 
 #-- Build ftdi_eeprom
-cd ftdi_eeprom
-if [ $ARCH == "darwin" ]; then
-  $CC -o ftdi_eeprom main.c -lftdi1 -lusb-1.0 -lconfuse -I../src -I$WORK_DIR/build-data/includes -I$PREFIX/include/libftdi1 -I$BUILD_DIR/$LIBUSB/libusb -I$BUILD_DIR/$LIBCONFUSE/src
+cd ftdi_eeprom || exit
+if [ "$ARCH" == "darwin" ]; then
+  $CC -o ftdi_eeprom main.c -lftdi1 -lusb-1.0 -lconfuse -I../src -I"$WORK_DIR"/build-data/includes -I"$PREFIX"/include/libftdi1 -I"$BUILD_DIR"/"$LIBUSB"/libusb -I"$BUILD_DIR"/"$LIBCONFUSE"/src
 else
-  $CC -o ftdi_eeprom main.c -static -lftdi1 -lusb-1.0 -lconfuse -lpthread -L$PREFIX/lib -L$LIBUSB_PREFIX/lib -L$LIBCONFUSE_PREFIX/lib -I$WORK_DIR/build-data/includes -I$PREFIX/include/libftdi1 -I$LIBUSB_PREFIX/include/libusb-1.0 -I$LIBCONFUSE_PREFIX/include
+  $CC -o ftdi_eeprom main.c -static -lftdi1 -lusb-1.0 -lconfuse -lpthread -L"$PREFIX"/lib -L"$LIBUSB_PREFIX"/lib -L"$LIBCONFUSE_PREFIX"/lib -I"$WORK_DIR"/build-data/includes -I"$PREFIX"/include/libftdi1 -I"$LIBUSB_PREFIX"/include/libusb-1.0 -I"$LIBCONFUSE_PREFIX"/include
 fi
 cd ..
 
@@ -65,5 +67,5 @@ test_bin examples/lsftdi
 test_bin ftdi_eeprom/ftdi_eeprom
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsftdi $PACKAGE_DIR/$NAME/bin/lsftdi$EXE
-cp ftdi_eeprom/ftdi_eeprom $PACKAGE_DIR/$NAME/bin/ftdi_eeprom$EXE
+cp examples/lsftdi "$PACKAGE_DIR"/"$NAME"/bin/lsftdi$EXE
+cp ftdi_eeprom/ftdi_eeprom "$PACKAGE_DIR"/"$NAME"/bin/ftdi_eeprom$EXE
