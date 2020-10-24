@@ -1,3 +1,4 @@
+#!/bin/bash
 # -- Compile libconfuse script
 
 VER=3.2.2
@@ -6,9 +7,11 @@ TAR_LIBCONFUSE=$LIBCONFUSE.tar.gz
 REL_LIBCONFUSE=https://github.com/martinh/libconfuse/releases/download/v$VER/$TAR_LIBCONFUSE
 
 # -- Setup
-. $WORK_DIR/scripts/build_setup.sh
+# shellcheck source=build_setup.sh
+. "$WORK_DIR"/scripts/build_setup.sh
 
-cd $UPSTREAM_DIR
+cd "$UPSTREAM_DIR" || exit
+
 # -- Check and download the release
 test -e $TAR_LIBCONFUSE || wget $REL_LIBCONFUSE
 
@@ -16,25 +19,25 @@ test -e $TAR_LIBCONFUSE || wget $REL_LIBCONFUSE
 tar zxf $TAR_LIBCONFUSE
 
 # -- Copy the upstream sources into the build directory
-rsync -a $LIBCONFUSE $BUILD_DIR --exclude .git
+rsync -a $LIBCONFUSE "$BUILD_DIR" --exclude .git
 
-cd $BUILD_DIR/$LIBCONFUSE
+cd "$BUILD_DIR/$LIBCONFUSE" || exit
 
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libconfuse
-if [ $ARCH != "darwin" ]; then
-  ./configure --prefix=$PREFIX --host=$HOST $CONFIG_FLAGS
+if [ "$ARCH" != "darwin" ]; then
+  ./configure --prefix="$PREFIX" --host="$HOST" "$CONFIG_FLAGS"
   make
   make install
 fi
 
 #-- Build simple
-cd examples
-if [ $ARCH == "darwin" ]; then
+cd examples || exit
+if [ "$ARCH" == "darwin" ]; then
   $CC -o simple simple.c -lconfuse -I../src
 else
-  $CC -o simple simple.c -static -lconfuse -L$PREFIX/lib -I$PREFIX/include
+  $CC -o simple simple.c -static -lconfuse -L"$PREFIX"/lib -I"$PREFIX"/include
 fi
 cd ..
 
