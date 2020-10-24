@@ -42,4 +42,4 @@ fi
 cd ..
 
 # -- Test the generated executables
-test_bin examples/simple
+test_bin examples/simple$EXE

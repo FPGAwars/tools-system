@@ -63,9 +63,9 @@ fi
 cd ..
 
 # -- Test the generated executables
-test_bin examples/lsftdi
-test_bin ftdi_eeprom/ftdi_eeprom
+test_bin examples/lsftdi$EXE
+test_bin ftdi_eeprom/ftdi_eeprom$EXE
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsftdi "$PACKAGE_DIR"/"$NAME"/bin/lsftdi$EXE
-cp ftdi_eeprom/ftdi_eeprom "$PACKAGE_DIR"/"$NAME"/bin/ftdi_eeprom$EXE
+cp examples/lsftdi$EXE "$PACKAGE_DIR"/"$NAME"/bin/lsftdi$EXE
+cp ftdi_eeprom/ftdi_eeprom$EXE "$PACKAGE_DIR"/"$NAME"/bin/ftdi_eeprom$EXE
