@@ -27,6 +27,8 @@ tar jxf $TAR_LIBFTDI1
 # -- Copy the upstream sources into the build directory
 rsync -a "$LIBFTDI1" "$BUILD_DIR" --exclude .git
 
+echo "----> Copiando $LIBFTDI1 $BUILD_DIR"
+
 cd "$BUILD_DIR"/"$LIBFTDI1" || exit
 
 PREFIX=$BUILD_DIR/$LIBFTDI1/release
@@ -38,7 +40,7 @@ if [ "$ARCH" != "darwin" ]; then
   mkdir -p build
   cd build || exit
   export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
-  cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
+  cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
   make -j$J
   make install
   cd ..

@@ -19,7 +19,7 @@ TARGET_ARCHS="linux_x86_64 linux_i686 linux_armv7l linux_aarch64 windows_x86 win
 NAME=tools-system
 
 # -- Debug flags
-INSTALL_DEPS=1
+INSTALL_DEPS=0
 COMPILE_LSUSB=1
 COMPILE_LCONFUSE=1
 COMPILE_LSFTDI=1
