@@ -19,26 +19,26 @@ function test_base {
 }
 
 function test_exists {
-    test_base "- 1. File exists" test -e $1
+    test_base "- 1. File exists" test -e "$1"
 }
 
 function test_exec {
-    test_base "- 2. File is executable" test -x $1
+    test_base "- 2. File is executable" test -x "$1"
 }
 
 function test_static {
-    output=$(ldd $1 2>&1 | grep "not a dynamic executable")
+    output=$(ldd "$1" 2>&1 | grep "not a dynamic executable")
     test_base "- 3. File is static" test -n "$output"
 }
 
-file $FILE
+file "$FILE"
 
 echo "------------------------------" >&2
 
-test_exists $FILE
-test_exec $FILE
+test_exists "$FILE"
+test_exec "$FILE"
 if [[ $ARCH != "darwin" ]]; then
-	test_static $FILE
+	test_static "$FILE"
 fi
 
 echo "------------------------------" >&2
