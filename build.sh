@@ -9,7 +9,7 @@ export LC_ALL=C
 # Generate tools-system-arch-ver.tar.gz from source code
 # sources: https://github.com/FPGAwars/tools-system
 
-VERSION=1.1.1
+export VERSION=1.1.1
 
 # -- Target architectures
 ARCH=$1
@@ -35,35 +35,43 @@ PACKAGES_DIR=$WORK_DIR/_packages
 UPSTREAM_DIR=$WORK_DIR/_upstream
 
 # -- Create the build directory
-mkdir -p $BUILDS_DIR
+mkdir -p "$BUILDS_DIR"
 # -- Create the packages directory
-mkdir -p $PACKAGES_DIR
+mkdir -p "$PACKAGES_DIR"
 # -- Create the upstream directory and enter into it
-mkdir -p $UPSTREAM_DIR
+mkdir -p "$UPSTREAM_DIR"
 
 # -- Test script function
 function test_bin {
-  . $WORK_DIR/test/test_bin.sh $1
-  if [ $? != "0" ]; then
+
+  # shellcheck source=test/test_bin.sh
+  if ! . "$WORK_DIR"/test/test_bin.sh "$1";
+  then
     exit 1
   fi
+
+
+
+  #if [ $? != "0" ]; then
+  #  exit 1
+  #fi
 }
 
 # -- Print function
 function print {
   echo ""
-  echo $1
+  echo "$1"
   echo ""
 }
 
 # -- Check ARCH
-if [[ $# > 1 ]]; then
+if [[ $# -gt 1 ]]; then
   echo ""
   echo "Error: too many arguments"
   exit 1
 fi
 
-if [[ $# < 1 ]]; then
+if [[ $# -lt 1 ]]; then
   echo ""
   echo "Usage: bash build.sh TARGET"
   echo ""
@@ -90,21 +98,23 @@ PACKAGE_DIR=$PACKAGES_DIR/build_$ARCH
 if [ $INSTALL_DEPS == "1" ]; then
 
   print ">> Install dependencies"
-  . $WORK_DIR/scripts/install_dependencies.sh
+  # shellcheck source=scripts/install_dependencies.sh
+  . "$WORK_DIR"/scripts/install_dependencies.sh
 
 fi
 
 # -- Create the build dir
-mkdir -p $BUILD_DIR
+mkdir -p "$BUILD_DIR"
 
 # -- Create the package folders
-mkdir -p $PACKAGE_DIR/$NAME/bin
+mkdir -p "$PACKAGE_DIR/$NAME"/bin
 
 # --------- Compile lsusb ------------------------------------------
 if [ $COMPILE_LSUSB == "1" ]; then
 
   print ">> Compile lsusb"
-  . $WORK_DIR/scripts/compile_lsusb.sh
+  # shellcheck source=scripts/compile_lsusb.sh
+  . "$WORK_DIR"/scripts/compile_lsusb.sh
 
 fi
 
@@ -112,7 +122,8 @@ fi
 if [ $COMPILE_LCONFUSE == "1" ]; then
 
   print ">> Compile lconfuse"
-  . $WORK_DIR/scripts/compile_lconfuse.sh
+  # shellcheck source=scripts/compile_lconfuse.sh
+  . "$WORK_DIR"/scripts/compile_lconfuse.sh
 
 fi
 
@@ -120,7 +131,8 @@ fi
 if [ $COMPILE_LSFTDI == "1" ]; then
 
   print ">> Compile lsftdi"
-  . $WORK_DIR/scripts/compile_lsftdi.sh
+  # shellcheck source=scripts/compile_lsftdi.sh
+  . "$WORK_DIR"/scripts/compile_lsftdi.sh
 
 fi
 
@@ -128,6 +140,7 @@ fi
 if [ $CREATE_PACKAGE == "1" ]; then
 
   print ">> Create package"
-  . $WORK_DIR/scripts/create_package.sh
+  # shellcheck source=scripts/compile_lsftdi.sh
+  . "$WORK_DIR"/scripts/compile_lsftdi.sh
 
 fi
