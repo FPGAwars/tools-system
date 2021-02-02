@@ -34,8 +34,10 @@ fi
 
 #-- Build lsusb
 cd examples || exit
-if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
+if [ "$ARCH" == "darwin" ]; then
   $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb
+elif [ "$ARCH" == "darwin_arm64" ]; then
+  $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb -L/opt/homebrew/opt/libusb/lib/
 else
   $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L"$PREFIX"/lib -I"$PREFIX"/include/libusb-1.0
 fi

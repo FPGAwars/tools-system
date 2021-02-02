@@ -34,8 +34,10 @@ fi
 
 #-- Build simple
 cd examples || exit
-if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
+if [ "$ARCH" == "darwin" ]; then
   $CC -o simple simple.c -lconfuse -I../src
+elif [ "$ARCH" == "darwin_arm64" ]; then
+  make simple
 else
   $CC -o simple simple.c -static -lconfuse -L"$PREFIX"/lib -I"$PREFIX"/include
 fi
