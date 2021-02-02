@@ -26,7 +26,7 @@ cd "$BUILD_DIR/$LIBCONFUSE" || exit
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libconfuse
-if [ "$ARCH" != "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   ./configure --prefix="$PREFIX" --host="$HOST" "$CONFIG_FLAGS"
   make
   make install
@@ -34,7 +34,7 @@ fi
 
 #-- Build simple
 cd examples || exit
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   $CC -o simple simple.c -lconfuse -I../src
 else
   $CC -o simple simple.c -static -lconfuse -L"$PREFIX"/lib -I"$PREFIX"/include

@@ -36,7 +36,7 @@ LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
 LIBCONFUSE_PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libftdi
-if [ "$ARCH" != "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   mkdir -p build
   cd build || exit
   export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
@@ -48,7 +48,7 @@ fi
 
 #-- Build lsftdi
 cd examples || exit
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I../src
 else
   $CC -o lsftdi find_all.c -static -lftdi1 -lusb-1.0 -lpthread -L"$PREFIX"/lib -L"$LIBUSB_PREFIX"/lib -I"$PREFIX"/include/libftdi1

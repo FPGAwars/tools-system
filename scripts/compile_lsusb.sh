@@ -26,7 +26,7 @@ cd "$BUILD_DIR"/"$LIBUSB" || exit
 PREFIX=$BUILD_DIR/$LIBUSB/release
 
 #-- Build libusb
-if [ "$ARCH" != "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   ./configure --prefix="$PREFIX" --host=$HOST --enable-udev=no "$CONFIG_FLAGS"
   make -j$J
   make install
@@ -34,7 +34,7 @@ fi
 
 #-- Build lsusb
 cd examples || exit
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb
 else
   $CC -o lsusb listdevs.c -static -lusb-1.0 -lpthread -L"$PREFIX"/lib -I"$PREFIX"/include/libusb-1.0
