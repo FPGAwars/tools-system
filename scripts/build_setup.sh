@@ -39,7 +39,7 @@ if [ "$ARCH" == "windows_amd64" ]; then
   export CMAKE_FLAGS="-DCMAKE_TOOLCHAIN_FILE=$WORK_DIR/build-data/cmake/toolchain-win64.cmake"
 fi
 
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   export CC="clang"
   export J=$(($(sysctl -n hw.ncpu)-1))
 else

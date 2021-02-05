@@ -30,7 +30,7 @@ if [ "${ARCH:0:7}" == "windows" ]; then
   sudo apt-get autoremove -y
 fi
 
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   if ! command -v brew;
   then
       # Install Homebrew

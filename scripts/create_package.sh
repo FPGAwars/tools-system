@@ -34,9 +34,9 @@ if [ "$ARCH" == "windows_amd64" ]; then
   sed -i "s/%SYSTEM%/\"windows_amd64\"/;" "$PACKAGE_DIR"/"$NAME"/package.json
 fi
 
-if [ "$ARCH" == "darwin" ]; then
+if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
   sed -i "" "s/%VERSION%/\"$VERSION\"/;" "$PACKAGE_DIR"/"$NAME"/package.json
-  sed -i "" "s/%SYSTEM%/\"darwin\", \"darwin_x86_64\", \"darwin_i386\"/;" "$PACKAGE_DIR"/"$NAME"/package.json
+  sed -i "" "s/%SYSTEM%/\"darwin\", \"darwin_x86_64\", \"darwin_i386\", \"darwin_arm64\"/;" "$PACKAGE_DIR"/"$NAME"/package.json
 fi
 
 ## --Create a tar.gz package

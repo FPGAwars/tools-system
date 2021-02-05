@@ -31,6 +31,7 @@ Target architectures:
 * windows_x86
 * windows_amd64
 * darwin
+* darwin_arm64
 
 Final packages will be deployed in the **\_packages/build_ARCH/** directories.
 
