@@ -7,9 +7,9 @@
 export LC_ALL=C
 
 # Generate tools-system-arch-ver.tar.gz from source code
-# sources: https://github.com/FPGAwars/tools-system
 
-export VERSION=1.1.1
+# Change this number before releasing!
+export VERSION=1.1.2
 
 # -- Target architectures
 ARCH=$1
@@ -19,11 +19,11 @@ TARGET_ARCHS="linux_x86_64 linux_i686 linux_armv7l linux_aarch64 windows_x86 win
 NAME=tools-system
 
 # -- Debug flags
-INSTALL_DEPS=1
-COMPILE_LSUSB=1
-COMPILE_LCONFUSE=1
-COMPILE_LSFTDI=1
-CREATE_PACKAGE=1
+INSTALL_DEPS=0
+COMPILE_LSUSB=0
+COMPILE_LCONFUSE=0
+COMPILE_LSFTDI=0
+CREATE_PACKAGE=0
 
 # -- Store current dir
 WORK_DIR=$PWD
@@ -80,7 +80,9 @@ if [[ $ARCH =~ [[:space:]] || ! $TARGET_ARCHS =~ (^|[[:space:]])$ARCH([[:space:]
 fi
 
 echo ""
+echo "******* Building TOOL-system apio package"
 echo ">>> ARCHITECTURE \"$ARCH\""
+echo ""
 
 # -- Directory for compiling the tools
 BUILD_DIR=$BUILDS_DIR/build_$ARCH

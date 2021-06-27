@@ -1,0 +1,23 @@
+# Packaging and Releasing the Tools-system apio package
+
+name: Release
+
+# Manual activation
+on: [workflow_dispatch]
+
+jobs:
+
+  # -- Building Linux_x86_64
+  build-Linux_x86_64:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      # -- Checkout the repo
+      - name: Checkout!
+        uses: actions/checkout@v2
+
+      # -- Execute the build script
+      - name: Run build Script
+        run |
+          ./build linux_x86_64
