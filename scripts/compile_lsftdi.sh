@@ -44,13 +44,15 @@ echo "** Dir: $(pwd)"
 export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
 echo "** cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS"
 # cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
-cmake -S .. 
+cmake -DCMAKE_INSTALL_PREFIX="$PREFIX" -S .. 
 make -j"$J"
 make install
 cd ..
 
 
 #-- Build lsftdi
+echo ""
+echo "--> Build lsftdi"
 cd examples || exit
 if [ "$ARCH" == "darwin" ]; then
   $CC -o lsftdi find_all.c -lftdi1 -lusb-1.0 -I../src
