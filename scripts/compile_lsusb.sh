@@ -13,26 +13,36 @@ REL_LIBUSB=https://github.com/libusb/libusb/releases/download/v$VER/$TAR_LIBUSB
 cd "$UPSTREAM_DIR" || exit
 
 # -- Check and download the release
+echo "--> Downloading: $REL_LIBUSB"
+echo ""
 test -e $TAR_LIBUSB || wget $REL_LIBUSB
 
 # -- Unpack the release
+echo "--> Extracting: $TAR_LIBUSB"
+echo ""
 tar jxf $TAR_LIBUSB
 
 # -- Copy the upstream sources into the build directory
+echo "--> Build dir: $BUILD_DIR"
+echo ""
 rsync -a "$LIBUSB" "$BUILD_DIR" --exclude .git
 
-cd "$BUILD_DIR"/"$LIBUSB" || exit
+# -- Change dir to the libusb source folder
+LIBUSB_DIR="$BUILD_DIR"/"$LIBUSB"
+echo "--> Current build dir: $LIBUSB_DIR"
+cd "$LIBUSB_DIR" || exit
 
 PREFIX=$BUILD_DIR/$LIBUSB/release
 
 #-- Build libusb
-if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
-  ./configure --prefix="$PREFIX" --host=$HOST --enable-udev=no "$CONFIG_FLAGS"
-  make -j$J
-  make install
-fi
+echo "--> Building the libusb package"
+./configure --prefix="$PREFIX" --host="$HOST" --enable-udev=no "$CONFIG_FLAGS"
+make -j"$J"
+make install
+
 
 #-- Build lsusb
+echo "--> Building lsusb"
 cd examples || exit
 if [ "$ARCH" == "darwin" ]; then
   $CC -o lsusb listdevs.c -lusb-1.0 -I../libusb
@@ -43,10 +53,12 @@ else
 fi
 cd ..
 
-echo "-----> EXE: $EXE"
+echo "--> EXE: $EXE"
 
 # -- Test the generated executables
-test_bin examples/lsusb$EXE
+test_bin examples/lsusb"$EXE"
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsusb$EXE "$PACKAGE_DIR"/"$NAME"/bin/lsusb$EXE
+DESTINATION="$PACKAGE_DIR"/"$NAME"/bin/lsusb"$EXE"
+echo "--> Generated file: $DESTINATION"
+cp examples/lsusb"$EXE" "$DESTINATION"
