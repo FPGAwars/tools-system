@@ -13,7 +13,8 @@ Static binaries of the **lsftdi** and **lsusb** tools. Packaged for [Apio](https
 
 # Documentation
 
-[The project documentation is located in the wiki](https://github.com/FPGAwars/tools-system/wiki).
+
+Find all the information on the [WIKI page](https://github.com/FPGAwars/tools-system/wiki)
 
 ## Authors
 
