@@ -43,4 +43,8 @@ fi
 
 cd "$PACKAGE_DIR"/"$NAME" || exit
 
-tar -czvf ../"$NAME"-"$ARCH"-"$VERSION".tar.gz ./*
+PACKAGE_NAME="$NAME"-"$ARCH"-"$VERSION".tar.gz
+echo "--> Packaged created: $PACKAGE_NAME"
+
+tar -czvf ../"$PACKAGE_NAME" ./*
+echo "--> Dir: $PACKAGE_DIR/$NAME"
