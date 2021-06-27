@@ -8,6 +8,7 @@ on: [workflow_dispatch]
 jobs:
 
   # -- Building Linux_x86_64
+  # -- It creates the package tools-system-linux_x86_64-version.tar.gz
   build-Linux_x86_64:
 
     runs-on: ubuntu-20.04

@@ -8,8 +8,11 @@ export LC_ALL=C
 
 # Generate tools-system-arch-ver.tar.gz from source code
 
-# Change this number before releasing!
-export VERSION=1.1.2
+# Read the version from the VERSION text file
+# There is where you should write the new version number
+VERSION=$(cat VERSION)
+export VERSION
+echo "Package version: $VERSION"
 
 # -- Target architectures
 ARCH=$1
