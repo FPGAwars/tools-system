@@ -36,15 +36,15 @@ LIBUSB_PREFIX=$BUILD_DIR/$LIBUSB/release
 LIBCONFUSE_PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libftdi
-if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
-  mkdir -p build
-  cd build || exit
-  export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
-  cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS
-  make -j$J
-  make install
-  cd ..
-fi
+
+mkdir -p build
+cd build || exit
+export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
+cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
+make -j"$J"
+make install
+cd ..
+
 
 #-- Build lsftdi
 cd examples || exit
@@ -69,9 +69,9 @@ fi
 cd ..
 
 # -- Test the generated executables
-test_bin examples/lsftdi$EXE
-test_bin ftdi_eeprom/ftdi_eeprom$EXE
+test_bin examples/lsftdi"$EXE"
+test_bin ftdi_eeprom/ftdi_eeprom"$EXE"
 
 # -- Copy the executable into the packages/bin dir
-cp examples/lsftdi$EXE "$PACKAGE_DIR"/"$NAME"/bin/lsftdi$EXE
-cp ftdi_eeprom/ftdi_eeprom$EXE "$PACKAGE_DIR"/"$NAME"/bin/ftdi_eeprom$EXE
+cp examples/lsftdi"$EXE" "$PACKAGE_DIR"/"$NAME"/bin/lsftdi"$EXE"
+cp ftdi_eeprom/ftdi_eeprom"$EXE" "$PACKAGE_DIR"/"$NAME"/bin/ftdi_eeprom"$EXE"
