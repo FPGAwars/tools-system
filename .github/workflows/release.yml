@@ -19,7 +19,33 @@ jobs:
         uses: actions/checkout@v2
 
       # -- Execute the build script
-      - name: Run build Script
+      - name: Run build Script (Linux_x86_64)
         run: |
           ./build.sh linux_x86_64
+          version=$(cat VERSION)
+          echo "VERSION: $version"
+          echo "VERSION=$version" >> $GITHUB_ENV
 
+      #-- Create the Release
+      - name: Create the Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION }}
+          release_name: v${{ env.VERSION }}
+          body: |
+            A new release
+          draft: true
+          prerelease: false
+
+      - name: Upload Linux_x86_64 Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: _packages/build_linux_x86_64/tools-system-linux_x86_64-${{ env.VERSION }}.tar.gz
+          asset_name: tools-system-linux_x86_64-${{ env.VERSION }}.tar.gz
+          asset_content_type: application/tar+gzip
