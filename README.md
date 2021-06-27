@@ -1,3 +1,5 @@
+[![](https://github.com/FPGAwars/tools-system/raw/master/wiki/Logos/Apio-tool-systems-github.png)](https://github.com/FPGAwars/tools-system/wiki)
+
 # Tools-system
 
 [![Build Status](https://travis-ci.org/FPGAwars/tools-system.svg?branch=v1.1.1)](https://travis-ci.org/FPGAwars/tools-system)
@@ -52,3 +54,6 @@ NOTE: *libftdi* and *libusb* libraries are generated for each architecture. In o
 ## License
 
 Licensed under [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+-------
+[![](https://github.com/FPGAwars/icestudio-wiki/raw/main/Logos/fgpawars-banner.svg)](https://fpgawars.github.io/)
