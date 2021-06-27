@@ -26,11 +26,10 @@ cd "$BUILD_DIR/$LIBCONFUSE" || exit
 PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libconfuse
-if [ "$ARCH" == "darwin" ] || [ "$ARCH" == "darwin_arm64" ]; then
-  ./configure --prefix="$PREFIX" --host="$HOST" "$CONFIG_FLAGS"
-  make
-  make install
-fi
+
+./configure --prefix="$PREFIX" --host="$HOST" "$CONFIG_FLAGS"
+make
+make install
 
 #-- Build simple
 cd examples || exit
@@ -44,4 +43,4 @@ fi
 cd ..
 
 # -- Test the generated executables
-test_bin examples/simple$EXE
+test_bin examples/simple"$EXE"
