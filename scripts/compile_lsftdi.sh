@@ -37,10 +37,14 @@ LIBCONFUSE_PREFIX=$BUILD_DIR/$LIBCONFUSE/release
 
 #-- Build libftdi
 
+echo "--> Build libftdi"
 mkdir -p build
 cd build || exit
+echo "** Dir: $(pwd)"
 export PKG_CONFIG_PATH=$LIBUSB_PREFIX/lib/pkgconfig
-cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
+echo "** cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX $CMAKE_FLAGS"
+# cmake .. -DCMAKE_INSTALL_PREFIX="$PREFIX" "$CMAKE_FLAGS"
+cmake -S .. 
 make -j"$J"
 make install
 cd ..
