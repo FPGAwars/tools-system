@@ -19,6 +19,6 @@ jobs:
 
       # -- Execute the build script
       - name: Run build Script
-        run |
+        run: |
           ./build.sh linux_x86_64
 
