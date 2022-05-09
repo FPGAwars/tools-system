@@ -1,5 +1,8 @@
 [![](https://github.com/FPGAwars/tools-system/raw/master/wiki/Logos/Apio-tool-systems-github.png)](https://github.com/FPGAwars/tools-system/wiki)
 
+# Archived!
+* **2022-May-9**: This repo has been archived, since the system tools are no longer used as an isolated Apio package. Use the [Tools-oss-cad-suite](https://github.com/FPGAwars/tools-oss-cad-suite) package instead
+
 # Tools-system
 
 [![Build Status](https://travis-ci.org/FPGAwars/tools-system.svg?branch=v1.1.1)](https://travis-ci.org/FPGAwars/tools-system)
